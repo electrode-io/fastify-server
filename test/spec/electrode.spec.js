@@ -95,7 +95,7 @@ describe("electrode-server", function() {
         error = e;
       }
       expect(error, "expected error thrown").to.exist;
-      if (!_.includes(error.message, "address already in use")) {
+      if (!_.includes(error.message, "is already in use")) {
         throw error;
       }
     } finally {
@@ -645,46 +645,6 @@ describe("electrode-server", function() {
       assert.isUndefined(msg);
     } finally {
       stopServer(server);
-    }
-  });
-
-  it("callback is called", async () => {
-    let server;
-    let callbackCalled = false;
-    const callback = (err, svr) => {
-      if (err) {
-        throw err;
-      }
-      server = svr;
-      callbackCalled = true;
-    };
-    try {
-      await electrodeServer({}, [], callback);
-      expect(callbackCalled).true;
-    } finally {
-      if (server) {
-        stopServer(server);
-      }
-    }
-  });
-
-  it("callback passed as the second parameter", async () => {
-    let server;
-    let callbackCalled = false;
-    const callback = (err, svr) => {
-      if (err) {
-        throw err;
-      }
-      server = svr;
-      callbackCalled = true;
-    };
-    try {
-      await electrodeServer({}, callback);
-      expect(callbackCalled).true;
-    } finally {
-      if (server) {
-        stopServer(server);
-      }
     }
   });
 
