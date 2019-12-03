@@ -1,0 +1,73 @@
+{
+  "name": "@xarc/fastify-server",
+  "version": "0.0.1",
+  "description": "A configurable Fastify web server",
+  "main": "lib/electrode-server.js",
+  "scripts": {
+    "prepublishOnly": "clap test",
+    "test": "clap test",
+    "coverage": "clap check",
+    "sample": "node test/sample/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electrode-io/electrode-server.git"
+  },
+  "keywords": [
+    "electrode",
+    "fastify",
+    "node",
+    "webserver"
+  ],
+  "contributors": [
+    {
+      "name": "Joel Chen",
+      "email": "xchen@walmartlabs.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 10.0.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "async-eventemitter": "^0.2.2",
+    "chalk": "^2.4.2",
+    "electrode-confippet": "^1.2.10",
+    "lodash": "^4.17.11",
+    "fastify": "^2.10.0",
+    "require-at": "^1.0.1",
+    "xaa": "^1.1.4"
+  },
+  "devDependencies": {
+    "electrode-archetype-njs-module-dev": "^3.0.0",
+    "fastify-static": "^2.5.0",
+    "intercept-stdout": "^0.1.2",
+    "mitm": "^1.2.0",
+    "run-verify": "^1.2.1",
+    "superagent": "^5.0.0"
+  },
+  "nyc": {
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "exclude": [
+      "coverage",
+      "*clap.js",
+      "gulpfile.js",
+      "dist",
+      "test"
+    ],
+    "check-coverage": true,
+    "statements": 100,
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "cache": true
+  }
+}
