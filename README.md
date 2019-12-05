@@ -15,6 +15,7 @@ This module requires Node v10.x.x+.
 
 - [Installing](#installing)
 - [Usage](#usage)
+  - [Hello World Example](#hello-world-example)
 - [Configuration](#configuration)
 - [Configuration Options](#configuration-options)
   - [`server` (Object)](#server-object)
@@ -33,6 +34,7 @@ This module requires Node v10.x.x+.
   - [Example: `fastify-static`](#example-fastify-static)
 - [API](#api)
   - [electrodeServer](#electrodeserver)
+  - [`app` decorator](#app-decorator)
 - [Contributions](#contributions)
 - [License](#license)
 
@@ -51,6 +53,45 @@ require("@xarc/fastify-server")();
 Of course that doesn't do much but getting a `404` response from `http://localhost:3000`.
 To handle your routes, you should create a Fastify plugin to install your handlers.
 See below for configuration options on how to register your plugin through `@xarc/fastify-server`.
+
+### Hello World Example
+
+Here is an example with a default route to return a `Hello World` string for `http://localhost:3000`.
+
+Through a plugin:
+
+```js
+require("@xarc/fastify-server")({
+  plugins: {
+    routes: {
+      register: async instance => {
+        instance.route({
+          method: "GET",
+          path: "/",
+          handler: async () => "Hello World"
+        });
+      }
+    }
+  }
+});
+```
+
+Using `deferStart` flag to get a server that hasn't started yet:
+
+```js
+//
+// fastify doesn't allow adding routes after server started
+// so need to set deferStart flag true to be able to add a route and then start the server.
+//
+require("@xarc/fastify-server")({ deferStart: true }).then(server => {
+  server.route({
+    method: "GET",
+    path: "/",
+    handler: async () => "Hello World"
+  });
+  return server.start();
+});
+```
 
 ## Configuration
 
@@ -73,7 +114,28 @@ However, for a more complex application, it's recommended that you use a config 
 
 ## Configuration Options
 
-Here's what you can configure:
+Sample of supported options:
+
+```js
+const config = {
+  server: {
+    // options to be passed to fastify constructor
+  },
+  connection: {
+    // host, port etc
+  },
+  plugins: {
+    // specify fastify plugins to be registered
+  },
+  listener: emitter => {
+    // setup server startup event handlers
+  },
+  deferStart: true, // don't start the server, you need to call server.start()
+  electrode: {
+    // options specific to Electrode such as logLevel
+  }
+};
+```
 
 All properties are optional (if not present, the default values shown below will be used).
 
