@@ -50,7 +50,7 @@ require("@xarc/fastify-server")();
 
 Of course that doesn't do much but getting a `404` response from `http://localhost:3000`.
 To handle your routes, you should create a Fastify plugin to install your handlers.
-See below for configuration options on how to register your plugin through electrode-server.
+See below for configuration options on how to register your plugin through `@xarc/fastify-server`.
 
 ## Configuration
 
@@ -66,7 +66,7 @@ const config = {
   }
 };
 
-require("electrode-server")(config);
+require("@xarc/fastify-server")(config);
 ```
 
 However, for a more complex application, it's recommended that you use a config composer such as [electrode-confippet] to manage your app configuration.
@@ -77,7 +77,7 @@ Here's what you can configure:
 
 All properties are optional (if not present, the default values shown below will be used).
 
-`server.app.config` is set to a object that's the combination of your config with `electrode-server's` defaults applied.
+`server.app.config` is set to a object that's the combination of your config with `@xarc/fastify-server's` defaults applied.
 
 ### `server` (Object)
 
@@ -98,7 +98,7 @@ All properties are optional (if not present, the default values shown below will
 ### `connection` (Object)
 
 - Connection to setup for the Fastify server. Contains connection details for the server.
-- If you want multiple connections, you can start multiple instances of `electrode-server`
+- If you want multiple connections, you can start multiple instances of `@xarc/fastify-server`
 
 **Default:**
 
@@ -193,12 +193,12 @@ Once you have your config files setup according to the [configuration files setu
 ```js
 const config = require("electrode-confippet").config;
 
-require("electrode-server")(config);
+require("@xarc/fastify-server")(config);
 ```
 
 ## Adding a Fastify plugin
 
-You can have `electrode-server` register any Fastify plugin that you want
+You can have `@xarc/fastify-server` register any Fastify plugin that you want
 through your configuration file.
 
 ```js
@@ -336,7 +336,7 @@ Then, add your plugin to the config `plugins` section.
 }
 ```
 
-Above config tells `electrode-server` to `require` from `CWD` the module by its `<plugin-id>` `"fastify-static"` and register it as a plugin with Fastify. Options passes in the required `root` option to `fastify-static`.
+Above config tells `@xarc/fastify-server` to `require` from `CWD` the module by its `<plugin-id>` `"fastify-static"` and register it as a plugin with Fastify. Options passes in the required `root` option to `fastify-static`.
 
 ## API
 
@@ -359,7 +359,7 @@ The electrode server exports a single API.
 
 ### `app` decorator
 
-Elecrode server also provides the `app` decorator on the server and request objects.  
+Elecrode server also provides the `app` decorator on the server and request objects.
 The `app` object contains the fully merged final `config`.
 
 ```js
@@ -391,7 +391,7 @@ To run sample server
 % npm run sample
 ```
 
-Hit `http://localhost:9000`  
+Hit `http://localhost:9000`
 Hit `http://localhost:9000/html/hello.html` to test static path.
 
 ## License
@@ -404,11 +404,11 @@ Licensed under the [Apache License, Version 2.0].
 [fastify]: https://www.fastify.io/
 [fastify's `server.register`]: https://www.fastify.io/docs/latest/Server/#register
 [configuration files setup]: https://www.npmjs.com/package/electrode-confippet#configuration-files
-[npm-image]: https://badge.fury.io/js/electrode-server.svg
-[npm-url]: https://npmjs.org/package/electrode-server
-[travis-image]: https://travis-ci.org/electrode-io/electrode-server.svg?branch=master
-[travis-url]: https://travis-ci.org/electrode-io/electrode-server
-[daviddm-image]: https://david-dm.org/electrode-io/electrode-server.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/electrode-io/electrode-server
+[npm-image]: https://badge.fury.io/js/@xarc%2Ffastify-server.svg
+[npm-url]: https://npmjs.org/package/@xarc/fastify-server
+[travis-image]: https://travis-ci.org/electrode-io/fastify-server.svg?branch=master
+[travis-url]: https://travis-ci.org/electrode-io/fastify-server
+[daviddm-image]: https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/electrode-io/fastify-server
 [require-from-path]: https://www.npmjs.com/package/require-from-path
 [apache license, version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
