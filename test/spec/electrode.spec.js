@@ -30,20 +30,23 @@ describe("electrode-server", function() {
     return stopServer(s);
   });
 
-  const verifyServer = s =>
-    new Promise(resolve => {
-      // assert(server.settings.app.config, "server.settings.app.config not available");
-      assert(s.app.config, "server.app.config not available");
-      request.get(`http://127.0.0.1:${s.server.address().port}/html/test.html`).end((err, resp) => {
-        assert.equal(err.message, "Not Found");
-        assert.equal(err.status, HTTP_404);
+  const verifyServer = s => {
+    return asyncVerify(
+      () => assert(s.app.config, "server.app.config not available"),
+      expectError(next => {
+        return request.get(`http://127.0.0.1:${s.server.address().port}/html/test.html`).end(next);
+      }),
+      error => {
+        assert.equal(error.message, "Not Found");
+        assert.equal(error.status, HTTP_404);
+        const resp = error.response;
         assert.ok(resp, "No response from server");
         assert.ok(resp.body, "Response has no body");
         assert.equal(resp.body.error, "Not Found");
         assert.equal(resp.body.statusCode, HTTP_404);
-        resolve(s);
-      });
-    });
+      }
+    );
+  };
 
   const testSimplePromise = async (config, decors) => {
     server = await electrodeServer(config, decors);
