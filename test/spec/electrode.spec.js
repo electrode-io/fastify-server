@@ -10,6 +10,8 @@ const { asyncVerify, expectError } = require("run-verify");
 
 const HTTP_404 = 404;
 
+// test github actions
+
 describe("electrode-server", function() {
   const logLevel = "none";
 
@@ -53,17 +55,7 @@ describe("electrode-server", function() {
   };
 
   it("should start up a default server twice", async function() {
-    await testSimplePromise(
-      {
-        electrode: {
-          logLevel,
-          hostname: "blah-test-923898234" // test bad hostname
-        }
-      },
-      [require("../decor/decor1.js")]
-    );
-    await testSimplePromise(undefined, require("../decor/decor2"));
-    return;
+    throw new Error("test failure for gh actions");
   });
 
   it("should support deferStart to allow user to add routes to server", () => {
