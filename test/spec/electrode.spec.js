@@ -6,7 +6,7 @@ const assert = require("chai").assert;
 const _ = require("lodash");
 const request = require("superagent");
 const xaa = require("xaa");
-const { asyncVerify, expectError } = require("run-verify");
+const { asyncVerify, expectError, runFinally } = require("run-verify");
 
 const HTTP_404 = 404;
 
@@ -19,40 +19,43 @@ describe("electrode-server", function() {
     process.env.PORT = 3000;
   });
 
+  let server;
+
+  const stopServer = s => s && s.close();
+
   afterEach(() => {
     delete process.env.PORT;
+    const s = server;
+    server = undefined;
+    return stopServer(s);
   });
 
-  const stopServer = server => server.close();
-
-  const verifyServer = server =>
-    new Promise(resolve => {
-      // assert(server.settings.app.config, "server.settings.app.config not available");
-      assert(server.app.config, "server.app.config not available");
-      request
-        .get(`http://127.0.0.1:${server.server.address().port}/html/test.html`)
-        .end((err, resp) => {
-          assert.equal(err.message, "Not Found");
-          assert.equal(err.status, HTTP_404);
-          assert.ok(resp, "No response from server");
-          assert.ok(resp.body, "Response has no body");
-          assert.equal(resp.body.error, "Not Found");
-          assert.equal(resp.body.statusCode, HTTP_404);
-          resolve(server);
-        });
-    }).catch(err => {
-      stopServer(server);
-      throw err;
-    });
-
-  const testSimplePromise = async (config, decors) => {
-    const server = await electrodeServer(config, decors);
-    await verifyServer(server);
-    await stopServer(server);
-    return server;
+  const verifyServer = s => {
+    return asyncVerify(
+      () => assert(s.app.config, "server.app.config not available"),
+      expectError(next => {
+        return request.get(`http://127.0.0.1:${s.server.address().port}/html/test.html`).end(next);
+      }),
+      error => {
+        assert.equal(error.message, "Not Found");
+        assert.equal(error.status, HTTP_404);
+        const resp = error.response;
+        assert.ok(resp, "No response from server");
+        assert.ok(resp.body, "Response has no body");
+        assert.equal(resp.body.error, "Not Found");
+        assert.equal(resp.body.statusCode, HTTP_404);
+      }
+    );
   };
 
-  it("should start up a default server twice", async function() {
+  const testSimplePromise = async (config, decors) => {
+    server = await electrodeServer(config, decors);
+    await verifyServer(server);
+    await stopServer(server);
+    server = undefined;
+  };
+
+  it("should start up a default server twice", async () => {
     await testSimplePromise(
       {
         electrode: {
@@ -62,28 +65,25 @@ describe("electrode-server", function() {
       },
       [require("../decor/decor1.js")]
     );
-    await testSimplePromise(undefined, require("../decor/decor2"));
-    return;
+    return await testSimplePromise(undefined, require("../decor/decor2"));
   });
 
   it("should support deferStart to allow user to add routes to server", () => {
     return asyncVerify(async () => {
-      const server = await electrodeServer({ deferStart: true });
+      server = await electrodeServer({ deferStart: true });
       server.route({
         method: "GET",
         path: "/",
         handler: async () => "foo"
       });
       await server.start();
-      await server.close();
     });
   });
 
-  it("should fail for PORT in use", async function() {
-    let error;
-    const server = await electrodeServer();
-    try {
-      try {
+  it("should fail for PORT in use", () => {
+    return asyncVerify(
+      expectError(async () => {
+        server = await electrodeServer();
         await electrodeServer({
           connection: {
             port: server.server.address().port
@@ -92,108 +92,102 @@ describe("electrode-server", function() {
             logLevel
           }
         });
-      } catch (e) {
-        error = e;
+      }),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("is already in use");
       }
-      expect(error, "expected error thrown").to.exist;
-      if (!_.includes(error.message, "is already in use")) {
-        throw error;
+    );
+  });
+
+  it("should fail for listener errors", () => {
+    return asyncVerify(
+      expectError(() => electrodeServer({}, require("../decor/decor3"))),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("test listner error");
       }
-    } finally {
-      await stopServer(server);
-    }
+    );
   });
 
-  it("should fail for listener errors", async function() {
-    let error;
-    try {
-      await electrodeServer({}, require("../decor/decor3"));
-    } catch (e) {
-      error = e;
-    }
-    expect(error, "expected error thrown").to.exist;
-    expect(error.message).includes("test listner error");
+  it("should fail for listener errors from decor array with func", () => {
+    return asyncVerify(
+      expectError(() => electrodeServer({}, [require("../decor/decor4")])),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("test listner error");
+      }
+    );
   });
 
-  it("should fail for listener errors from decor array with func", async function() {
-    let error;
-    try {
-      await electrodeServer({}, [require("../decor/decor4")]);
-    } catch (e) {
-      error = e;
-    }
-    expect(error.message).includes("test listner error");
+  it("should fail if plugins.requireFromPath is not string", () => {
+    const options = { electrode: { logLevel: "none" }, plugins: { requireFromPath: {} } };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains("config.plugins.requireFromPath must be a string");
+      }
+    );
   });
 
-  it("should fail if plugins.requireFromPath is not string", async function() {
-    let error;
-    try {
-      await electrodeServer({ electrode: { logLevel: "none" }, plugins: { requireFromPath: {} } });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.message).contains("config.plugins.requireFromPath must be a string");
+  it("should fail if can't load module from requireFromPath", () => {
+    const options = {
+      electrode: { logLevel: "none" },
+      plugins: {
+        requireFromPath: "/",
+        "fastify-plugin": {}
+      }
+    };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains("Failed loading module fastify-plugin from path");
+        expect(error.message).contains("Cannot find module 'fastify-plugin'");
+      }
+    );
   });
 
-  it("should fail if can't load module from requireFromPath", async function() {
-    let error;
-    try {
-      await electrodeServer({
-        electrode: { logLevel: "none" },
-        plugins: {
-          requireFromPath: "/",
-          "@hapi/inert": {}
-        }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.message).contains("Failed loading module @hapi/inert from path");
-    expect(error.message).contains("Cannot find module '@hapi/inert'");
-  });
-
-  it("should fail if can't load module from module.requireFromPath", async function() {
-    let error;
-    try {
-      await electrodeServer({
-        electrode: { logLevel: "none" },
-        plugins: {
-          "@hapi/inert": {
-            module: {
-              requireFromPath: "/",
-              name: "inert"
-            }
+  it("should fail if can't load module from module.requireFromPath", () => {
+    const options = {
+      electrode: { logLevel: "none" },
+      plugins: {
+        "plugin-module-not-found": {
+          module: {
+            requireFromPath: "/",
+            name: "fastify-plugin"
           }
         }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.message).contains("Failed loading module inert from path");
-    expect(error.message).contains("Cannot find module 'inert'");
+      }
+    };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains("Failed loading module fastify-plugin from path");
+        expect(error.message).contains("Cannot find module 'fastify-plugin'");
+      }
+    );
   });
 
-  it("should start up with @empty_config", function() {
-    return electrodeServer().then(stopServer);
+  it("should start up with @empty_config", async () => {
+    server = await electrodeServer();
   });
 
-  it("should start up with @correct_plugins_priority", async function() {
-    const server = await electrodeServer(require("../data/server.js"));
-    try {
-      assert.ok(server.testPlugin, "testPlugin missing in server");
-      assert.ok(server.es6StylePlugin, "es6StylePlugin missing in server");
-    } finally {
-      await stopServer(server);
-    }
+  it("should start up with @correct_plugins_priority", () => {
+    return asyncVerify(
+      async () => (server = await electrodeServer(require("../data/server.js"))),
+      () => {
+        assert.ok(server.testPlugin, "testPlugin missing in server");
+        assert.ok(server.es6StylePlugin, "es6StylePlugin missing in server");
+      }
+    );
   });
 
-  it("should return static file", async function() {
-    let server;
-    const verifyServerStatic = s =>
-      new Promise(resolve => {
+  it("should return static file", () => {
+    const verifyServerStatic = s => {
+      return new Promise(resolve => {
         request
           .get(`http://localhost:${s.server.address().port}/html/hello.html`)
           .end((err, resp) => {
@@ -202,6 +196,7 @@ describe("electrode-server", function() {
             resolve();
           });
       });
+    };
 
     const config = {
       server: {
@@ -220,78 +215,70 @@ describe("electrode-server", function() {
       }
     };
 
-    try {
+    return asyncVerify(async () => {
       server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
       await verifyServerStatic(server);
-    } finally {
-      if (server) {
-        await stopServer(server);
+    });
+  });
+
+  it("should fail for invalid plugin spec", () => {
+    const options = {
+      electrode: { logLevel: "none" },
+      plugins: { invalid: { module: false } }
+    };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains(
+          `plugin invalid disable 'module' but has no 'register' field`
+        );
       }
-    }
+    );
   });
 
-  it("should fail for invalid plugin spec", async function() {
-    let error;
-    try {
-      await electrodeServer({
-        electrode: { logLevel: "none" },
-        plugins: { invalid: { module: false } }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.message).contains(`plugin invalid disable 'module' but has no 'register' field`);
+  it("should fail start up due to @plugin_error", () => {
+    return asyncVerify(
+      expectError(() => electrodeServer(require("../data/server-with-plugin-error.js"))),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains(`plugin_failure`);
+      }
+    );
   });
 
-  it("should fail start up due to @plugin_error", async function() {
-    let error;
-    try {
-      await electrodeServer(require("../data/server-with-plugin-error.js"));
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    if (!_.includes(error.message, "plugin_failure")) {
-      throw error;
-    }
-  });
-
-  it("should fail start up due to @bad_plugin", async function() {
-    let error;
-    try {
-      await electrodeServer(require("../data/bad-plugin.js"));
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    if (!_.includes(error.message, "Failed loading module ./test/plugins/err-plugin")) {
-      throw error;
-    }
+  it("should fail start up due to @bad_plugin", () => {
+    return asyncVerify(
+      expectError(
+        () => electrodeServer(require("../data/bad-plugin.js")),
+        error => {
+          expect(error).to.be.an("Error");
+          expect(error.message).contains(`Failed loading module ./test/plugins/err-plugin`);
+        }
+      )
+    );
   });
 
   it("should fail with plugins register timeout", () => {
     const register = () => {
       return new Promise(() => {});
     };
-
+    const options = {
+      plugins: {
+        test: {
+          register,
+          name: "timeout"
+        }
+      },
+      server: {
+        pluginTimeout: 1000
+      },
+      electrode: {
+        logLevel
+      }
+    };
     return asyncVerify(
-      expectError(() =>
-        electrodeServer({
-          plugins: {
-            test: {
-              register,
-              name: "timeout"
-            }
-          },
-          server: {
-            pluginTimeout: 1000
-          },
-          electrode: {
-            logLevel
-          }
-        })
-      ),
+      expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes(
@@ -315,119 +302,116 @@ describe("electrode-server", function() {
         .catch(() => Promise.reject(new Error("--- test timeout ---")))
         .then(() => Promise.reject(new Error("boom")));
     };
-
-    let error;
-    try {
-      await electrodeServer({
-        plugins: {
-          test: {
-            register,
-            name: "timeout"
-          }
-        },
-        electrode: {
-          logLevel,
-          registerPluginsTimeout: 100
+    const options = {
+      plugins: {
+        test: {
+          register,
+          name: "timeout"
         }
-      });
-    } catch (e) {
-      error = e;
-    } finally {
-      process.execArgv = save;
-    }
-    expect(error.message).includes("--- test timeout ---");
+      },
+      electrode: {
+        logLevel,
+        registerPluginsTimeout: 100
+      }
+    };
+    return asyncVerify(
+      runFinally(() => (process.execArgv = save)),
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("--- test timeout ---");
+      }
+    );
   };
 
-  it("should not abort with plugins register timeout in inspect mode", async () => {
-    await testNoAbort("--inspect");
+  it("should not abort with plugins register timeout in inspect mode", () => {
+    return testNoAbort("--inspect");
   });
 
-  it("should not abort with plugins register timeout in inspect-brk mode", async () => {
-    await testNoAbort("--inspect-brk");
+  it("should not abort with plugins register timeout in inspect-brk mode", () => {
+    return testNoAbort("--inspect-brk");
   });
 
-  it("should fail if plugin register returned error", async () => {
+  it("should fail if plugin register returned error", () => {
     const register = async () => {
       throw new Error("test plugin register returning error");
     };
-    let error;
-    try {
-      await electrodeServer({
-        plugins: {
-          test: {
-            register,
-            name: "errorPlugin"
-          }
-        },
-        electrode: {
-          logLevel
+    const options = {
+      plugins: {
+        test: {
+          register,
+          name: "errorPlugin"
         }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    if (!_.includes(error.message, "test plugin register returning error")) {
-      throw error;
-    }
+      },
+      electrode: {
+        logLevel
+      }
+    };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("test plugin register returning error");
+      }
+    );
   });
 
-  it("should fail if plugin with module register returned error", async () => {
-    let error;
-    try {
-      await electrodeServer({
-        plugins: {
-          test: {
-            module: path.join(__dirname, "../plugins/fail-plugin")
-          }
-        },
-        electrode: {
-          logLevel
+  it("should fail if plugin with module register returned error", () => {
+    const options = {
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/fail-plugin")
         }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.message).includes("fail-plugin");
-    expect(error.code).eq("XPLUGIN_FAILED");
-    expect(error.method).includes("with module");
+      },
+      electrode: {
+        logLevel
+      }
+    };
+
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("fail-plugin");
+        expect(error.code).eq("XPLUGIN_FAILED");
+        expect(error.method).includes("with module");
+      }
+    );
   });
 
   it("should fail plugin with string instead of error", async () => {
-    let error;
-    try {
-      await electrodeServer({
-        plugins: {
-          test: {
-            module: path.join(__dirname, "../plugins/fail-plugin-with-message")
-          }
+    const options = {
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/fail-plugin-with-message")
         }
-      });
-    } catch (e) {
-      error = e;
-    }
-    expect(error).exist;
-    expect(error.message).includes("fail-plugin");
-    expect(error.code).eq("XPLUGIN_FAILED");
-    expect(error.method).includes("with module");
+      }
+    };
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).includes("fail-plugin");
+        expect(error.code).eq("XPLUGIN_FAILED");
+        expect(error.method).includes("with module");
+      }
+    );
   });
 
   it("should fail if plugin with requireFromPath and module register returned error", () => {
+    const options = {
+      plugins: {
+        test: {
+          requireFromPath: __dirname,
+          module: "../plugins/fail-plugin"
+        }
+      },
+      electrode: {
+        logLevel
+      }
+    };
     return asyncVerify(
-      expectError(() =>
-        electrodeServer({
-          plugins: {
-            test: {
-              requireFromPath: __dirname,
-              module: "../plugins/fail-plugin"
-            }
-          },
-          electrode: {
-            logLevel
-          }
-        })
-      ),
+      expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("fail-plugin");
@@ -440,20 +424,19 @@ describe("electrode-server", function() {
       throw new Error("test plugin failure");
     };
 
+    const options = {
+      plugins: {
+        test: {
+          register,
+          name: "errorPlugin"
+        }
+      },
+      electrode: {
+        logLevel
+      }
+    };
     return asyncVerify(
-      expectError(() =>
-        electrodeServer({
-          plugins: {
-            test: {
-              register,
-              name: "errorPlugin"
-            }
-          },
-          electrode: {
-            logLevel
-          }
-        })
-      ),
+      expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("test plugin failure");
@@ -462,42 +445,33 @@ describe("electrode-server", function() {
   });
 
   it("should load default config when no environment specified", async () => {
-    let server;
-    try {
-      server = await electrodeServer();
-      assert.equal(server.app.config.electrode.source, "development");
-    } finally {
-      stopServer(server);
-    }
+    server = await electrodeServer();
+    assert.equal(server.app.config.electrode.source, "development");
   });
 
   it("should load config based on environment", async () => {
     process.env.NODE_ENV = "production";
 
-    let server;
     try {
       server = await electrodeServer();
       assert.equal(server.app.config.electrode.source, "production");
-      process.env.NODE_ENV = "test";
     } finally {
-      stopServer(server);
+      process.env.NODE_ENV = "test";
     }
   });
 
   it("should skip env config that doesn't exist", async () => {
     process.env.NODE_ENV = "development";
 
-    let server;
     try {
       server = await electrodeServer();
       assert.equal(server.app.config.electrode.source, "development");
-      process.env.NODE_ENV = "test";
     } finally {
-      stopServer(server);
+      process.env.NODE_ENV = "test";
     }
   });
 
-  it("should emit lifecycle events", async function() {
+  it("should emit lifecycle events", async () => {
     const events = [
       "config-composed",
       "server-created",
@@ -527,16 +501,11 @@ describe("electrode-server", function() {
       listener: eventListener
     };
 
-    let server;
-    try {
-      server = await electrodeServer(options);
-      assert(firedEvents.indexOf(false) === -1, "failed to fire event.");
-    } finally {
-      stopServer(server);
-    }
+    server = await electrodeServer(options);
+    assert(firedEvents.indexOf(false) === -1, "failed to fire event.");
   });
 
-  it("should handle event handler timeout error", async function() {
+  it("should handle event handler timeout error", () => {
     const eventListener = emitter => {
       emitter.on("plugins-sorted", (data, next) => {}); // eslint-disable-line
     };
@@ -546,17 +515,16 @@ describe("electrode-server", function() {
       listener: eventListener
     };
 
-    let error;
-    try {
-      await electrodeServer(options);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.code).to.equal("XEVENT_TIMEOUT");
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.code).to.equal("XEVENT_TIMEOUT");
+      }
+    );
   });
 
-  it("should handle event handler error", async function() {
+  it("should handle event handler error", () => {
     const eventListener = emitter => {
       emitter.on("plugins-sorted", (data, next) => {
         next(new Error("oops"));
@@ -568,26 +536,25 @@ describe("electrode-server", function() {
       listener: eventListener
     };
 
-    let error;
-    try {
-      await electrodeServer(options);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(error.code).to.equal("XEVENT_FAILED");
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.code).to.equal("XEVENT_FAILED");
+      }
+    );
   });
 
-  it("should stop server if error occurred after it's started", async () => {
-    let server;
+  it("should stop server if error occurred after it's started", () => {
+    let saveServer;
     let stopped;
     const fakeClose = () => {
       stopped = true;
-      return server._close();
+      return saveServer._close();
     };
     const eventListener = emitter => {
       emitter.on("server-started", (data, next) => {
-        server = data.server;
+        saveServer = server = data.server;
         server._close = server.close;
         server.close = fakeClose;
         next(new Error("test"));
@@ -599,15 +566,14 @@ describe("electrode-server", function() {
       listener: eventListener
     };
 
-    let error;
-    try {
-      await electrodeServer(options);
-    } catch (e) {
-      error = e;
-    }
-    expect(error).to.exist;
-    expect(stopped).to.equal(true);
-    expect(error.code).to.equal("XEVENT_FAILED");
+    return asyncVerify(
+      expectError(() => electrodeServer(options)),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(stopped).to.equal(true);
+        expect(error.code).to.equal("XEVENT_FAILED");
+      }
+    );
   });
 
   it("displays a startup banner at startup time", async () => {
@@ -616,14 +582,9 @@ describe("electrode-server", function() {
     console.info = m => {
       msg = m;
     };
-    let server;
-    try {
-      server = await electrodeServer();
-      console.info = i;
-      assert.include(msg, "Fastify server running");
-    } finally {
-      return stopServer(server);
-    }
+    server = await electrodeServer();
+    console.info = i;
+    assert.include(msg, "Fastify server running");
   });
 
   it("displays no startup banner at startup time if logLevel is set to something other than info", async () => {
@@ -632,36 +593,24 @@ describe("electrode-server", function() {
     console.info = m => {
       msg = m;
     };
-    let server;
-    try {
-      server = await electrodeServer({
-        electrode: {
-          logLevel: "warn"
-        }
-      });
-      console.info = i;
-      assert.isUndefined(msg);
-    } finally {
-      stopServer(server);
-    }
+    server = await electrodeServer({
+      electrode: {
+        logLevel: "warn"
+      }
+    });
+    console.info = i;
+    assert.isUndefined(msg);
   });
 
   it("test fastify plugin", async () => {
-    let server;
-    try {
-      server = await electrodeServer({
-        plugins: {
-          test: {
-            module: path.join(__dirname, "../plugins/fastify-plugin")
-          }
+    server = await electrodeServer({
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/fastify-plugin")
         }
-      });
-      expect(server.hasDecorator("utility")).true;
-      expect(server.utility()).eq("bingo");
-    } finally {
-      if (server) {
-        stopServer(server);
       }
-    }
+    });
+    expect(server.hasDecorator("utility")).true;
+    expect(server.utility()).eq("bingo");
   });
 });
