@@ -622,6 +622,7 @@ describe("electrode-server", function() {
       handler: (req, reply) => {
         reply.send(req.app.marker ? "Not Fresh" : "Fresh");
         req.app.marker = 1;
+        server.app.marker = 1;
       }
     });
     await server.start();
