@@ -42,6 +42,7 @@
     "fastify": "^2.10.0",
     "fastify-plugin": "^1.6.0",
     "lodash": "^4.17.11",
+    "pino": "^5.15.0",
     "require-at": "^1.0.1",
     "xaa": "^1.1.4"
   },
@@ -51,6 +52,7 @@
     "intercept-stdout": "^0.1.2",
     "mitm": "^1.2.0",
     "run-verify": "^1.2.1",
+    "sinon": "^7.5.0",
     "superagent": "^5.0.0"
   },
   "nyc": {
