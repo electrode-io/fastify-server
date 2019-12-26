@@ -613,4 +613,22 @@ describe("electrode-server", function() {
     expect(server.hasDecorator("utility")).true;
     expect(server.utility()).eq("bingo");
   });
+
+  it("gets a fresh instance of request.app", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.route({
+      method: "GET",
+      path: "/",
+      handler: (req, reply) => {
+        reply.send(req.app.marker ? "Not Fresh" : "Fresh");
+        req.app.marker = 1;
+        server.app.marker = 1;
+      }
+    });
+    await server.start();
+    const { payload: payload1 } = await server.inject({ method: "GET", url: "/" });
+    const { payload: payload2 } = await server.inject({ method: "GET", url: "/" });
+    expect(payload1).to.equal("Fresh");
+    expect(payload2).to.equal("Fresh");
+  });
 });
