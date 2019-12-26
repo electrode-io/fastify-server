@@ -7,6 +7,7 @@ const _ = require("lodash");
 const request = require("superagent");
 const xaa = require("xaa");
 const { asyncVerify, expectError, runFinally } = require("run-verify");
+const boom = require("@hapi/boom");
 
 const HTTP_404 = 404;
 
@@ -641,5 +642,49 @@ describe("electrode-server", function() {
     await server.start();
     const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
     expect(payload).to.equal("127.0.0.1");
+  });
+
+  it("handles boom error objects", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.get("/boom", (req, reply) => {
+      reply.send(boom.illegal("Illegal!", { details: "not legal" }));
+    });
+    await server.start();
+    const {payload} = await server.inject({ method: "GET", url: "/boom"});
+    expect(JSON.parse(payload)).to.deep.equal({
+      statusCode: 451,
+      error: "Unavailable For Legal Reasons",
+      message: "Illegal!"
+    });
+  });
+
+  it("handles boom error objects", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.get("/boom", (req, reply) => {
+      reply.send(boom.illegal("Illegal!", { details: "not legal" }));
+    });
+    await server.start();
+    const {payload} = await server.inject({ method: "GET", url: "/boom"});
+    expect(JSON.parse(payload)).to.deep.equal({
+      statusCode: 451,
+      error: "Unavailable For Legal Reasons",
+      message: "Illegal!"
+    });
+  });
+
+  it("handles non-boom error objects", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.get("/not-boom", (req, reply) => {
+      const e = new Error("Boo");
+      e.statusCode = 400;
+      reply.send(e);
+    });
+    await server.start();
+    const {payload} = await server.inject({ method: "GET", url: "/not-boom"});
+    expect(JSON.parse(payload)).to.deep.equal({
+      statusCode: 400,
+      error: "Bad Request",
+      message: "Boo"
+    });
   });
 });
