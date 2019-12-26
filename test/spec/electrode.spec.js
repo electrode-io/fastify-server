@@ -186,18 +186,6 @@ describe("electrode-server", function() {
   });
 
   it("should return static file", () => {
-    const verifyServerStatic = s => {
-      return new Promise(resolve => {
-        request
-          .get(`http://localhost:${s.server.address().port}/html/hello.html`)
-          .end((err, resp) => {
-            assert(resp, "Server didn't return response");
-            assert(_.includes(resp.text, "Hello Test!"), "response not contain expected string");
-            resolve();
-          });
-      });
-    };
-
     const config = {
       server: {
         logger: { level: "info" }
@@ -217,7 +205,9 @@ describe("electrode-server", function() {
 
     return asyncVerify(async () => {
       server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
-      await verifyServerStatic(server);
+      const resp = await request.get(`http://localhost:${server.server.address().port}/html/hello.html`);
+      assert(resp, "Server didn't return response");
+      assert(resp.text.includes("Hello Test!"), "response not contain expected string");
     });
   });
 
@@ -576,32 +566,6 @@ describe("electrode-server", function() {
     );
   });
 
-  it("displays a startup banner at startup time", async () => {
-    const i = console.info;
-    let msg;
-    console.info = m => {
-      msg = m;
-    };
-    server = await electrodeServer();
-    console.info = i;
-    assert.include(msg, "Fastify server running");
-  });
-
-  it("displays no startup banner at startup time if logLevel is set to something other than info", async () => {
-    const i = console.info;
-    let msg;
-    console.info = m => {
-      msg = m;
-    };
-    server = await electrodeServer({
-      electrode: {
-        logLevel: "warn"
-      }
-    });
-    console.info = i;
-    assert.isUndefined(msg);
-  });
-
   it("test fastify plugin", async () => {
     server = await electrodeServer({
       plugins: {
@@ -630,5 +594,52 @@ describe("electrode-server", function() {
     const { payload: payload2 } = await server.inject({ method: "GET", url: "/" });
     expect(payload1).to.equal("Fresh");
     expect(payload2).to.equal("Fresh");
+  });
+
+  it("gets decorated with request.path", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.route({
+      method: "GET",
+      path: "/some/path",
+      handler: (req, reply) => {
+        reply.send(req.path);
+      }
+    });
+    await server.start();
+    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    expect(payload).to.equal("/some/path");
+  });
+
+  it("gets decorated with request.path that is accessible from hooks", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.addHook("onRequest", (req, reply, done) => {
+      reply.send(req.path);
+      done();
+    });
+    await server.inject({ method: "GET", url: "/some/path?query=1"});
+    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    expect(payload).to.equal("/some/path");
+  });
+
+  it("gets decorated with request.info.ip (injected request)", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.addHook("onRequest", (req, reply, done) => {
+      reply.send(req.info.remoteAddress);
+      done();
+    });
+    await server.start();
+    const resp = await request.get(`http://localhost:${server.server.address().port}/path`);
+    expect(resp.text).to.equal("127.0.0.1");
+  });
+
+  it("gets decorated with request.info.ip", async () => {
+    server = await electrodeServer({ deferStart: true });
+    server.addHook("onRequest", (req, reply, done) => {
+      reply.send(req.info.remoteAddress);
+      done();
+    });
+    await server.start();
+    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    expect(payload).to.equal("127.0.0.1");
   });
 });
