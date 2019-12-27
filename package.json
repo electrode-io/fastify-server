@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/electrode-io/fastify-server.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "prettier": {
     "printWidth": 100
   },
