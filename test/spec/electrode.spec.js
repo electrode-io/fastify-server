@@ -517,6 +517,31 @@ describe("electrode-server", function () {
     );
   });
 
+  it("should not timeout event handlers if it's 0", () => {
+    let emitted = false;
+    const eventListener = emitter => {
+      emitter.on("plugins-sorted", (data, next) => {
+        setTimeout(() => {
+          emitted = true;
+          next();
+        }, 50);
+      });
+    };
+
+    const options = {
+      electrode: { logLevel, eventTimeout: 0 },
+      listener: eventListener
+    };
+
+    return asyncVerify(
+      () => electrodeServer(options),
+      s => {
+        server = s;
+        expect(emitted).to.be.true;
+      }
+    );
+  });
+
   it("should handle event handler error", () => {
     const eventListener = emitter => {
       emitter.on("plugins-sorted", (data, next) => {
@@ -724,5 +749,10 @@ describe("electrode-server", function () {
       error: "Bad Request",
       message: "Boo"
     });
+  });
+
+  it("should not crate logger if pinoOptions is false", async () => {
+    server = await electrodeServer({ electrode: { pinoOptions: false } });
+    expect(server.logger).to.eq(undefined);
   });
 });

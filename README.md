@@ -23,6 +23,7 @@ This module requires Node v10.x.x+.
     - [`server` (Object)](#server-object)
     - [`connection` (Object)](#connection-object)
     - [`plugins` (Object)](#plugins-object)
+    - [`electrode` (Object)](#electrode-object)
     - [`listener` (function)](#listener-function)
     - [logLevel](#loglevel)
   - [electrode-confippet](#electrode-confippet)
@@ -191,6 +192,22 @@ Default is just empty object:
   }
 }
 ```
+
+### `electrode` (Object)
+
+Configure electrode provided options.
+
+```js
+{
+  electrode: {
+    eventTimeout: 5000, // milliseconds to wait for server start event listeners to return
+    pinoOptions: false;
+  }
+}
+```
+
+- `eventTimeout` - _optional_ milliseconds to wait for your server start event listeners to return. _default_ `10000`. Set it to `0` or `false` to disable timeout completely.
+- `pinoOptions` - _optional_ Electrode fastify server auto setup [pino] logger. If you want to disable this, set this to `false`. It can also be an object to use as `options` for [pino].
 
 ### `listener` (function)
 
