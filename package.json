@@ -18,7 +18,9 @@
     "access": "public"
   },
   "prettier": {
-    "printWidth": 100
+    "printWidth": 100,
+    "arrowParens": "avoid",
+    "trailingComma": "none"
   },
   "keywords": [
     "electrode",

@@ -11,7 +11,7 @@ const boom = require("@hapi/boom");
 
 const HTTP_404 = 404;
 
-describe("electrode-server", function() {
+describe("electrode-server", function () {
   const logLevel = "none";
 
   this.timeout(10000);
@@ -206,7 +206,9 @@ describe("electrode-server", function() {
 
     return asyncVerify(async () => {
       server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
-      const resp = await request.get(`http://localhost:${server.server.address().port}/html/hello.html`);
+      const resp = await request.get(
+        `http://localhost:${server.server.address().port}/html/hello.html`
+      );
       assert(resp, "Server didn't return response");
       assert(resp.text.includes("Hello Test!"), "response not contain expected string");
     });
@@ -567,16 +569,52 @@ describe("electrode-server", function() {
     );
   });
 
-  it("test fastify plugin", async () => {
+  it("load plugin from the module default field", async () => {
     server = await electrodeServer({
       plugins: {
         test: {
-          module: path.join(__dirname, "../plugins/fastify-plugin")
+          module: path.join(__dirname, "../plugins/as-default")
         }
       }
     });
     expect(server.hasDecorator("utility")).true;
     expect(server.utility()).eq("bingo");
+  });
+
+  it("load plugin from the module default.fastifyPlugin field", async () => {
+    server = await electrodeServer({
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/as-default-fastify-plugin")
+        }
+      }
+    });
+    expect(server.hasDecorator("utility")).true;
+    expect(server.utility()).eq("bingo default.fastifyPlugin");
+  });
+
+  it("load plugin from the module fastifyPlugin field", async () => {
+    server = await electrodeServer({
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/as-fastify-plugin")
+        }
+      }
+    });
+    expect(server.hasDecorator("utility")).true;
+    expect(server.utility()).eq("bingo fastifyPlugin");
+  });
+
+  it("load plugin from the module plugin field", async () => {
+    server = await electrodeServer({
+      plugins: {
+        test: {
+          module: path.join(__dirname, "../plugins/as-plugin")
+        }
+      }
+    });
+    expect(server.hasDecorator("utility")).true;
+    expect(server.utility()).eq("bingo plugin");
   });
 
   it("gets a fresh instance of request.app", async () => {
@@ -607,7 +645,7 @@ describe("electrode-server", function() {
       }
     });
     await server.start();
-    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    const { payload } = await server.inject({ method: "GET", url: "/some/path?query=1" });
     expect(payload).to.equal("/some/path");
   });
 
@@ -617,8 +655,8 @@ describe("electrode-server", function() {
       reply.send(req.path);
       done();
     });
-    await server.inject({ method: "GET", url: "/some/path?query=1"});
-    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    await server.inject({ method: "GET", url: "/some/path?query=1" });
+    const { payload } = await server.inject({ method: "GET", url: "/some/path?query=1" });
     expect(payload).to.equal("/some/path");
   });
 
@@ -640,7 +678,7 @@ describe("electrode-server", function() {
       done();
     });
     await server.start();
-    const {payload} = await server.inject({ method: "GET", url: "/some/path?query=1"});
+    const { payload } = await server.inject({ method: "GET", url: "/some/path?query=1" });
     expect(payload).to.equal("127.0.0.1");
   });
 
@@ -650,7 +688,7 @@ describe("electrode-server", function() {
       reply.send(boom.illegal("Illegal!", { details: "not legal" }));
     });
     await server.start();
-    const {payload} = await server.inject({ method: "GET", url: "/boom"});
+    const { payload } = await server.inject({ method: "GET", url: "/boom" });
     expect(JSON.parse(payload)).to.deep.equal({
       statusCode: 451,
       error: "Unavailable For Legal Reasons",
@@ -664,7 +702,7 @@ describe("electrode-server", function() {
       reply.send(boom.illegal("Illegal!", { details: "not legal" }));
     });
     await server.start();
-    const {payload} = await server.inject({ method: "GET", url: "/boom"});
+    const { payload } = await server.inject({ method: "GET", url: "/boom" });
     expect(JSON.parse(payload)).to.deep.equal({
       statusCode: 451,
       error: "Unavailable For Legal Reasons",
@@ -680,7 +718,7 @@ describe("electrode-server", function() {
       reply.send(e);
     });
     await server.start();
-    const {payload} = await server.inject({ method: "GET", url: "/not-boom"});
+    const { payload } = await server.inject({ method: "GET", url: "/not-boom" });
     expect(JSON.parse(payload)).to.deep.equal({
       statusCode: 400,
       error: "Bad Request",
