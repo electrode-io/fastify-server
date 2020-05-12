@@ -13,30 +13,32 @@ This module requires Node v10.x.x+.
 
 # Table Of Contents
 
-- [Installing](#installing)
-- [Usage](#usage)
-  - [Hello World Example](#hello-world-example)
-- [Configuration](#configuration)
-- [Configuration Options](#configuration-options)
-  - [`server` (Object)](#server-object)
-  - [`connection` (Object)](#connection-object)
-  - [`plugins` (Object)](#plugins-object)
-  - [`listener` (function)](#listener-function)
-  - [logLevel](#loglevel)
-- [electrode-confippet](#electrode-confippet)
-- [Adding a Fastify plugin](#adding-a-fastify-plugin)
-  - [Plugin configs](#plugin-configs)
-    - [About Plugin Priority](#about-plugin-priority)
-    - [More about register and module](#more-about-register-and-module)
-    - [Exporting your Fastify Plugin from a module](#exporting-your-fastify-plugin-from-a-module)
-    - [More about `requireFromPath`](#more-about-requirefrompath)
-    - [Plugin timeout](#plugin-timeout)
-  - [Example: `fastify-static`](#example-fastify-static)
-- [API](#api)
-  - [electrodeServer](#electrodeserver)
-  - [`app` decorator](#app-decorator)
-- [Contributions](#contributions)
-- [License](#license)
+- [Electrode Fastify Server [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]](#electrode-fastify-server-npm-versionnpm-url-build-statustravis-imagetravis-url-dependency-statusdaviddm-imagedaviddm-url)
+- [Table Of Contents](#table-of-contents)
+  - [Installing](#installing)
+  - [Usage](#usage)
+    - [Hello World Example](#hello-world-example)
+  - [Configuration](#configuration)
+  - [Configuration Options](#configuration-options)
+    - [`server` (Object)](#server-object)
+    - [`connection` (Object)](#connection-object)
+    - [`plugins` (Object)](#plugins-object)
+    - [`listener` (function)](#listener-function)
+    - [logLevel](#loglevel)
+  - [electrode-confippet](#electrode-confippet)
+  - [Adding a Fastify plugin](#adding-a-fastify-plugin)
+    - [Plugin configs](#plugin-configs)
+      - [About Plugin Priority](#about-plugin-priority)
+      - [More about register and module](#more-about-register-and-module)
+      - [Exporting your Fastify Plugin from a module](#exporting-your-fastify-plugin-from-a-module)
+      - [More about `requireFromPath`](#more-about-requirefrompath)
+      - [Plugin timeout](#plugin-timeout)
+    - [Example: `fastify-static`](#example-fastify-static)
+  - [API](#api)
+    - [electrodeServer](#electrodeserver)
+    - [`app` decorator](#app-decorator)
+  - [Contributions](#contributions)
+  - [License](#license)
 
 ## Installing
 
@@ -272,7 +274,8 @@ through your configuration file.
       priority: 210,
       register: (fastify, opts, done) => { done() }, // mutual exclusive with module
       module: "<plugin-module-name>",
-      requireFromPath: process.cwd()
+      requireFromPath: process.cwd(),
+      fastifyPluginDecorate: false
     }
   }
 }
@@ -284,6 +287,7 @@ through your configuration file.
 - `register` - _optional_ The Fastify plugin function. Overrides `module`.
 - `module` - _optional_ name of the module to load for the plugin instead of the `<plugin-id>`
 - `requireFromPath` - _optional_ The path from which to call `require` to load the plugin module
+- `fastifyPluginDecorate` - _optional_ fastify-server auto decorates your plugin with [fastify-plugin] - set this to `false` to disable this behavior. This can also be set to an object to use as options for [fastify-plugin].
 - `enable` - _optional_ if set to `false` then this plugin won't be registered. If it's not set then it's considered to be `true`.
 - `options` - _optional_ Object that's passed to the plugin's register function.
 - `priority` - _optional_ integer value to indicate the plugin's registration order
@@ -319,10 +323,13 @@ If you don't want to use `<plugin-id>` to load the module, then you can optional
 
 #### Exporting your Fastify Plugin from a module
 
-Electrode server will try to find your Fastify Plugin from your module by looking through these fields:
+Electrode fastify server will try to find your Fastify Plugin from your module by looking through these fields:
 
-1. `mod.default`
-2. `mod` itself
+1. `mod.fastifyPlugin`
+2. `mod.default.fastifyPlugin` (ES6 Module)
+3. `mod.plugin`
+4. `mod.default` (ES6 Module)
+5. `mod` itself
 
 Examples:
 
@@ -334,10 +341,18 @@ CommonJS example:
 module.exports = myPlugin;
 ```
 
+```js
+module.exports.fastifyPlugin = myPlugin;
+```
+
 ES6 example:
 
 ```js
 export default myPlugin;
+```
+
+```js
+export fastifyPlugin;
 ```
 
 With `fastify-plugin`:
@@ -474,3 +489,4 @@ Licensed under the [Apache License, Version 2.0].
 [daviddm-url]: https://david-dm.org/electrode-io/fastify-server
 [require-from-path]: https://www.npmjs.com/package/require-from-path
 [apache license, version 2.0]: https://www.apache.org/licenses/LICENSE-2.0
+[fastify-plugin]: https://www.npmjs.com/package/fastify-plugin
