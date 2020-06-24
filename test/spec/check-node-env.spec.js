@@ -3,7 +3,7 @@
 const checkNodeEnv = require("../../lib/check-node-env.js");
 const Chai = require("chai");
 
-describe("process-env-abbr", function() {
+describe("process-env-abbr", function () {
   let saveEnv;
 
   before(() => {
@@ -18,19 +18,19 @@ describe("process-env-abbr", function() {
     }
   });
 
-  it("should do nothing for empty NODE_ENV", function() {
+  it("should do nothing for empty NODE_ENV", function () {
     process.env.NODE_ENV = "";
     checkNodeEnv();
   });
 
-  it("should do nothing for full NODE_ENV", function() {
+  it("should do nothing for full NODE_ENV", function () {
     ["production", "staging", "development"].forEach(x => {
       process.env.NODE_ENV = x;
       checkNodeEnv();
     });
   });
 
-  it("should print warning for unexpected NODE_ENV", function() {
+  it("should print warning for unexpected NODE_ENV", function () {
     const w = process.stderr.write;
     let msg;
     process.stderr.write = m => {

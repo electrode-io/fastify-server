@@ -7,11 +7,11 @@ const _ = require("lodash");
 const request = require("superagent");
 const xaa = require("xaa");
 const { asyncVerify, expectError, runFinally } = require("run-verify");
-const boom = require("@hapi/boom");
+const xstdout = require("xstdout");
 
 const HTTP_404 = 404;
 
-describe("electrode-server", function () {
+describe("fastify-server", function () {
   const logLevel = "none";
 
   this.timeout(10000);
@@ -82,6 +82,7 @@ describe("electrode-server", function () {
   });
 
   it("should fail for PORT in use", () => {
+    const intercept = xstdout.intercept(true);
     return asyncVerify(
       expectError(async () => {
         server = await electrodeServer();
@@ -97,7 +98,9 @@ describe("electrode-server", function () {
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("is already in use");
-      }
+      },
+      runFinally(() => intercept.restore()),
+      runFinally(() => server.close())
     );
   });
 
@@ -122,17 +125,20 @@ describe("electrode-server", function () {
   });
 
   it("should fail if plugins.requireFromPath is not string", () => {
+    const intercept = xstdout.intercept(true);
     const options = { electrode: { logLevel: "none" }, plugins: { requireFromPath: {} } };
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).contains("config.plugins.requireFromPath must be a string");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
   it("should fail if can't load module from requireFromPath", () => {
+    const intercept = xstdout.intercept(true);
     const options = {
       electrode: { logLevel: "none" },
       plugins: {
@@ -146,7 +152,8 @@ describe("electrode-server", function () {
         expect(error).to.be.an("Error");
         expect(error.message).contains("Failed loading module fastify-plugin from path");
         expect(error.message).contains("Cannot find module 'fastify-plugin'");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -162,13 +169,16 @@ describe("electrode-server", function () {
         }
       }
     };
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).contains("Failed loading module fastify-plugin from path");
         expect(error.message).contains("Cannot find module 'fastify-plugin'");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -203,15 +213,19 @@ describe("electrode-server", function () {
         }
       }
     };
+    const intercept = xstdout.intercept(true);
 
-    return asyncVerify(async () => {
-      server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
-      const resp = await request.get(
-        `http://localhost:${server.server.address().port}/html/hello.html`
-      );
-      assert(resp, "Server didn't return response");
-      assert(resp.text.includes("Hello Test!"), "response not contain expected string");
-    });
+    return asyncVerify(
+      async () => {
+        server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
+        const resp = await request.get(
+          `http://localhost:${server.server.address().port}/html/hello.html`
+        );
+        assert(resp, "Server didn't return response");
+        assert(resp.text.includes("Hello Test!"), "response not contain expected string");
+      },
+      runFinally(() => intercept.restore())
+    );
   });
 
   it("should fail for invalid plugin spec", () => {
@@ -219,6 +233,8 @@ describe("electrode-server", function () {
       electrode: { logLevel: "none" },
       plugins: { invalid: { module: false } }
     };
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
@@ -226,29 +242,33 @@ describe("electrode-server", function () {
         expect(error.message).contains(
           `plugin invalid disable 'module' but has no 'register' field`
         );
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
   it("should fail start up due to @plugin_error", () => {
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(require("../data/server-with-plugin-error.js"))),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).contains(`plugin_failure`);
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
   it("should fail start up due to @bad_plugin", () => {
+    const intercept = xstdout.intercept(true);
     return asyncVerify(
-      expectError(
-        () => electrodeServer(require("../data/bad-plugin.js")),
-        error => {
-          expect(error).to.be.an("Error");
-          expect(error.message).contains(`Failed loading module ./test/plugins/err-plugin`);
-        }
-      )
+      expectError(() => electrodeServer(require("../data/bad-plugin.js"))),
+      error => {
+        expect(error).to.be.an("Error");
+        expect(error.message).contains(`Failed loading module ./test/plugins/err-plugin`);
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -270,6 +290,8 @@ describe("electrode-server", function () {
         logLevel
       }
     };
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
@@ -277,7 +299,8 @@ describe("electrode-server", function () {
         expect(error.message).includes(
           "plugin 'test' with register function timeout - did you return a resolved promise?"
         );
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -293,7 +316,7 @@ describe("electrode-server", function () {
           200
         )
         .catch(() => Promise.reject(new Error("--- test timeout ---")))
-        .then(() => Promise.reject(new Error("boom")));
+        .then(() => Promise.reject(new Error("test failure")));
     };
     const options = {
       plugins: {
@@ -307,13 +330,16 @@ describe("electrode-server", function () {
         registerPluginsTimeout: 100
       }
     };
+
+    const intercept = xstdout.intercept(true);
     return asyncVerify(
       runFinally(() => (process.execArgv = save)),
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("--- test timeout ---");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   };
 
@@ -340,12 +366,15 @@ describe("electrode-server", function () {
         logLevel
       }
     };
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("test plugin register returning error");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -360,6 +389,7 @@ describe("electrode-server", function () {
         logLevel
       }
     };
+    const intercept = xstdout.intercept(true);
 
     return asyncVerify(
       expectError(() => electrodeServer(options)),
@@ -368,7 +398,8 @@ describe("electrode-server", function () {
         expect(error.message).includes("fail-plugin");
         expect(error.code).eq("XPLUGIN_FAILED");
         expect(error.method).includes("with module");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -380,6 +411,9 @@ describe("electrode-server", function () {
         }
       }
     };
+
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
@@ -387,7 +421,8 @@ describe("electrode-server", function () {
         expect(error.message).includes("fail-plugin");
         expect(error.code).eq("XPLUGIN_FAILED");
         expect(error.method).includes("with module");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -403,12 +438,16 @@ describe("electrode-server", function () {
         logLevel
       }
     };
+
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("fail-plugin");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -428,12 +467,16 @@ describe("electrode-server", function () {
         logLevel
       }
     };
+
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes("test plugin failure");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -493,9 +536,15 @@ describe("electrode-server", function () {
     const options = {
       listener: eventListener
     };
+    const intercept = xstdout.intercept(true);
 
-    server = await electrodeServer(options);
-    assert(firedEvents.indexOf(false) === -1, "failed to fire event.");
+    return asyncVerify(
+      async () => (server = await electrodeServer(options)),
+      () => {
+        assert(firedEvents.indexOf(false) === -1, "failed to fire event.");
+      },
+      runFinally(() => intercept.restore())
+    );
   });
 
   it("should handle event handler timeout error", () => {
@@ -507,13 +556,15 @@ describe("electrode-server", function () {
       electrode: { logLevel, eventTimeout: 20 },
       listener: eventListener
     };
+    const intercept = xstdout.intercept(true);
 
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.code).to.equal("XEVENT_TIMEOUT");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -532,13 +583,15 @@ describe("electrode-server", function () {
       electrode: { logLevel, eventTimeout: 0 },
       listener: eventListener
     };
+    const intercept = xstdout.intercept(true);
 
     return asyncVerify(
       () => electrodeServer(options),
       s => {
         server = s;
         expect(emitted).to.be.true;
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -553,13 +606,15 @@ describe("electrode-server", function () {
       electrode: { logLevel, eventTimeout: 20 },
       listener: eventListener
     };
+    const intercept = xstdout.intercept(true);
 
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(error.code).to.equal("XEVENT_FAILED");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -584,13 +639,16 @@ describe("electrode-server", function () {
       listener: eventListener
     };
 
+    const intercept = xstdout.intercept(true);
+
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
         expect(error).to.be.an("Error");
         expect(stopped).to.equal(true);
         expect(error.code).to.equal("XEVENT_FAILED");
-      }
+      },
+      runFinally(() => intercept.restore())
     );
   });
 
@@ -643,24 +701,32 @@ describe("electrode-server", function () {
   });
 
   it("gets a fresh instance of request.app", async () => {
+    let marker = 1;
+    let saveReq;
     server = await electrodeServer({ deferStart: true });
     server.route({
       method: "GET",
       path: "/",
       handler: (req, reply) => {
+        if (!saveReq) {
+          saveReq = req;
+        }
         reply.send(req.app.marker ? "Not Fresh" : "Fresh");
-        req.app.marker = 1;
-        server.app.marker = 1;
+        req.app.marker = marker;
+        server.app.marker = marker;
+        marker++;
       }
     });
     await server.start();
     const { payload: payload1 } = await server.inject({ method: "GET", url: "/" });
+    expect(saveReq.app.marker).to.equal(1);
     const { payload: payload2 } = await server.inject({ method: "GET", url: "/" });
+    expect(saveReq.app.marker).to.equal(1);
     expect(payload1).to.equal("Fresh");
     expect(payload2).to.equal("Fresh");
   });
 
-  it("gets decorated with request.path", async () => {
+  it.skip("gets decorated with request.path", async () => {
     server = await electrodeServer({ deferStart: true });
     server.route({
       method: "GET",
@@ -674,7 +740,7 @@ describe("electrode-server", function () {
     expect(payload).to.equal("/some/path");
   });
 
-  it("gets decorated with request.path that is accessible from hooks", async () => {
+  it.skip("gets decorated with request.path that is accessible from hooks", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.path);
@@ -685,7 +751,7 @@ describe("electrode-server", function () {
     expect(payload).to.equal("/some/path");
   });
 
-  it("gets decorated with request.info.ip (injected request)", async () => {
+  it.skip("gets decorated with request.info.ip (injected request)", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.info.remoteAddress);
@@ -696,7 +762,7 @@ describe("electrode-server", function () {
     expect(resp.text).to.equal("127.0.0.1");
   });
 
-  it("gets decorated with request.info.ip", async () => {
+  it.skip("gets decorated with request.info.ip", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.info.remoteAddress);
@@ -705,54 +771,5 @@ describe("electrode-server", function () {
     await server.start();
     const { payload } = await server.inject({ method: "GET", url: "/some/path?query=1" });
     expect(payload).to.equal("127.0.0.1");
-  });
-
-  it("handles boom error objects", async () => {
-    server = await electrodeServer({ deferStart: true });
-    server.get("/boom", (req, reply) => {
-      reply.send(boom.illegal("Illegal!", { details: "not legal" }));
-    });
-    await server.start();
-    const { payload } = await server.inject({ method: "GET", url: "/boom" });
-    expect(JSON.parse(payload)).to.deep.equal({
-      statusCode: 451,
-      error: "Unavailable For Legal Reasons",
-      message: "Illegal!"
-    });
-  });
-
-  it("handles boom error objects", async () => {
-    server = await electrodeServer({ deferStart: true });
-    server.get("/boom", (req, reply) => {
-      reply.send(boom.illegal("Illegal!", { details: "not legal" }));
-    });
-    await server.start();
-    const { payload } = await server.inject({ method: "GET", url: "/boom" });
-    expect(JSON.parse(payload)).to.deep.equal({
-      statusCode: 451,
-      error: "Unavailable For Legal Reasons",
-      message: "Illegal!"
-    });
-  });
-
-  it("handles non-boom error objects", async () => {
-    server = await electrodeServer({ deferStart: true });
-    server.get("/not-boom", (req, reply) => {
-      const e = new Error("Boo");
-      e.statusCode = 400;
-      reply.send(e);
-    });
-    await server.start();
-    const { payload } = await server.inject({ method: "GET", url: "/not-boom" });
-    expect(JSON.parse(payload)).to.deep.equal({
-      statusCode: 400,
-      error: "Bad Request",
-      message: "Boo"
-    });
-  });
-
-  it("should not crate logger if pinoOptions is false", async () => {
-    server = await electrodeServer({ electrode: { pinoOptions: false } });
-    expect(server.logger).to.eq(undefined);
   });
 });

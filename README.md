@@ -201,13 +201,11 @@ Configure electrode provided options.
 {
   electrode: {
     eventTimeout: 5000, // milliseconds to wait for server start event listeners to return
-    pinoOptions: false;
   }
 }
 ```
 
 - `eventTimeout` - _optional_ milliseconds to wait for your server start event listeners to return. _default_ `10000`. Set it to `0` or `false` to disable timeout completely.
-- `pinoOptions` - _optional_ Electrode fastify server auto setup [pino] logger. If you want to disable this, set this to `false`. It can also be an object to use as `options` for [pino].
 
 ### `listener` (function)
 
@@ -288,10 +286,10 @@ through your configuration file.
     "<plugin-id>": {
       enable: true,
       options: {},
-      priority: 210,
       register: (fastify, opts, done) => { done() }, // mutual exclusive with module
       module: "<plugin-module-name>",
       requireFromPath: process.cwd(),
+      priority: 210,
       fastifyPluginDecorate: false
     }
   }
@@ -301,15 +299,15 @@ through your configuration file.
 ### Plugin configs
 
 - `<plugin-id>` - ID for the plugin. Generally the module name for the plugin, which is used to load it for registration.
+- `enable` - _optional_ if set to `false` then this plugin won't be registered. If it's not set then it's considered to be `true`.
+- `options` - _optional_ Object that's passed to the plugin's register function.
 - `register` - _optional_ The Fastify plugin function. Overrides `module`.
 - `module` - _optional_ name of the module to load for the plugin instead of the `<plugin-id>`
 - `requireFromPath` - _optional_ The path from which to call `require` to load the plugin module
-- `fastifyPluginDecorate` - _optional_ fastify-server auto decorates your plugin with [fastify-plugin] - set this to `false` to disable this behavior. This can also be set to an object to use as options for [fastify-plugin].
-- `enable` - _optional_ if set to `false` then this plugin won't be registered. If it's not set then it's considered to be `true`.
-- `options` - _optional_ Object that's passed to the plugin's register function.
 - `priority` - _optional_ integer value to indicate the plugin's registration order
   - Lower value ones are register first
   - Default to `Infinity` if this field is missing or has no valid integer value (`NaN`) (string of number accepted)
+- `fastifyPluginDecorate` - _optional_ fastify-server auto decorates your plugin with [fastify-plugin] - set this to `false` to disable this behavior. This can also be set to an object to use as options for [fastify-plugin].
 
 #### About Plugin Priority
 
