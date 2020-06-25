@@ -726,7 +726,7 @@ describe("fastify-server", function () {
     expect(payload2).to.equal("Fresh");
   });
 
-  it.skip("gets decorated with request.path", async () => {
+  it("gets decorated with request.path", async () => {
     server = await electrodeServer({ deferStart: true });
     server.route({
       method: "GET",
