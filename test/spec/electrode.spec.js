@@ -35,7 +35,7 @@ describe("fastify-server", function () {
     return asyncVerify(
       () => assert(s.app.config, "server.app.config not available"),
       expectError(next => {
-        return request.get(`http://127.0.0.1:${s.server.address().port}/html/test.html`).end(next);
+        return request.get(`http://127.0.0.1:${server.info.port}/html/test.html`).end(next);
       }),
       error => {
         assert.equal(error.message, "Not Found");
@@ -67,6 +67,22 @@ describe("fastify-server", function () {
       [require("../decor/decor1.js")]
     );
     return await testSimplePromise(undefined, require("../decor/decor2"));
+  });
+
+  it("should offer server.info before/after server start", async () => {
+    server = await electrodeServer({
+      deferStart: true,
+      connection: {
+        port: 5900
+      }
+    });
+    // before start
+    expect(server.info.port).equal(null);
+    expect(server.info.address).equal(null);
+    await server.start();
+    // after start
+    expect(server.info.port).equal(5900);
+    expect(server.info.address).equal("0.0.0.0");
   });
 
   it("should support deferStart to allow user to add routes to server", () => {
