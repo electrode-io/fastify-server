@@ -740,7 +740,7 @@ describe("fastify-server", function () {
     expect(payload).to.equal("/some/path");
   });
 
-  it.skip("gets decorated with request.path that is accessible from hooks", async () => {
+  it("gets decorated with request.path that is accessible from hooks", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.path);
@@ -751,7 +751,7 @@ describe("fastify-server", function () {
     expect(payload).to.equal("/some/path");
   });
 
-  it.skip("gets decorated with request.info.ip (injected request)", async () => {
+  it("gets decorated with request.info.ip (injected request)", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.info.remoteAddress);
@@ -762,7 +762,7 @@ describe("fastify-server", function () {
     expect(resp.text).to.equal("127.0.0.1");
   });
 
-  it.skip("gets decorated with request.info.ip", async () => {
+  it("gets decorated with request.info.ip", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
       reply.send(req.info.remoteAddress);
