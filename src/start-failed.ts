@@ -1,7 +1,6 @@
 "use strict";
 
 /* eslint-disable max-len */
-
 const Chalk = require("chalk");
 const ErrorCommon = require("./error-common");
 const _ = require("lodash");

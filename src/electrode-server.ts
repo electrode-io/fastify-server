@@ -1,7 +1,6 @@
 "use strict";
 
 /* eslint-disable no-magic-numbers, prefer-template, max-len */
-
 const assert = require("assert");
 const fastify = require("fastify");
 const _ = require("lodash");
@@ -268,7 +267,7 @@ async function startElectrodeServer(context) {
   return server;
 }
 
-module.exports = async function electrodeServer(appConfig = {}, decors) {
+module.exports = async function electrodeServer(appConfig = {} as any, decors) {
   const check = () => {
     checkNodeEnv();
 
@@ -285,7 +284,7 @@ module.exports = async function electrodeServer(appConfig = {}, decors) {
     const fastifyServerConfig = {
       app: {
         electrodeServer: true
-      }
+      } as any
     };
 
     Confippet.util.merge(fastifyServerConfig, context.config.server);

@@ -1,5 +1,4 @@
 "use strict";
-
 const Chalk = require("chalk");
 const Pkg = require("../package.json");
 

@@ -1,5 +1,4 @@
 "use strict";
-
 const Chalk = require("chalk");
 
 function checkNodeEnv() {
