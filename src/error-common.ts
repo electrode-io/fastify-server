@@ -14,4 +14,6 @@ const errCommon = {
   errContext: `${Pkg.name} ${caught} an error while starting your server`
 };
 
+
+export {};
 module.exports = errCommon;

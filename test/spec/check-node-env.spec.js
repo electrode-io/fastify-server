@@ -1,6 +1,6 @@
 "use strict";
 
-const checkNodeEnv = require("../../lib/check-node-env.js");
+const checkNodeEnv = require("../../dist/check-node-env.js");
 const Chai = require("chai");
 
 describe("process-env-abbr", function () {

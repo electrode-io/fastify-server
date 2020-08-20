@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "dist",
     "lib": [
-      "es6"
+      "es2018"
     ],
     "module": "CommonJS",
     "esModuleInterop": false,
-    "target": "es6",
+    "target": "ES2018",
     "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": true,

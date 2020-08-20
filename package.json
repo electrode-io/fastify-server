@@ -2,9 +2,10 @@
   "name": "@xarc/fastify-server",
   "version": "2.1.0",
   "description": "A configurable Fastify web server",
-  "main": "lib/electrode-server.js",
+  "main": "dist/electrode-server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run cpdir",
+    "cpdir" : "cp -r ./src/config  ./dist/config",
     "prepublishOnly": "xrun [[build], xarc/check]",
     "test": "clap test",
     "coverage": "clap check",

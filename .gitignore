@@ -140,4 +140,4 @@ node_modules
 *-lock.*
 .vscode
 
-lib/
+dist/

@@ -416,3 +416,6 @@ module.exports = async function electrodeServer(appConfig = {} as any, decors) {
   await emitEvent(ctx, "config-composed");
   return await start(ctx);
 };
+
+
+export {};

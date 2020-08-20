@@ -19,4 +19,6 @@ const fastifyPluginDecorate = plugin => {
   return plugin;
 };
 
+
+export {};
 module.exports.fastifyPluginDecorate = fastifyPluginDecorate;
