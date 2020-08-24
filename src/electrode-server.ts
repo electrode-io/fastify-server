@@ -1,6 +1,4 @@
-"use strict";
-
-/* eslint-disable no-magic-numbers, prefer-template, max-len */
+/* eslint-disable no-magic-numbers, prefer-template, max-len, @typescript-eslint/no-var-requires */
 const assert = require("assert");
 const fastify = require("fastify");
 const _ = require("lodash");

@@ -1,6 +1,4 @@
-"use strict";
-
-/* eslint-disable max-len */
+/* eslint-disable max-len, @typescript-eslint/no-var-requires */
 const Chalk = require("chalk");
 const ErrorCommon = require("./error-common");
 const _ = require("lodash");
