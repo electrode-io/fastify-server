@@ -7,8 +7,8 @@
     "build": "tsc && npm run cpdir",
     "cpdir": "cp -r ./src/config  ./dist/config",
     "prepublishOnly": "xrun [[build], xarc/check]",
-    "test": "xrun xarc/test-only",
-    "coverage": "xrun xarc/test-cov",
+    "test": "npm run build && xrun xarc/test-only",
+    "coverage": "npm run build && xrun xarc/test-cov",
     "sample": "node test/sample/index.js"
   },
   "repository": {
