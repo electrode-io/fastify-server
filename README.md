@@ -239,6 +239,16 @@ myConfig.listener = (emitter) => {
 
 - These are async events so you have to take and call a `next` callback.
 
+### keepAliveTimeout (integer)
+
+NodeJS defaults to 5 seconds keep-alive timeout. `fastify-server` defaults to 60 seconds timeout. If you want a custom timeout, use the `keepAliveTimeout` option (in milliseconds).
+
+```json
+{
+  "keepAliveTimeout": 60000
+}
+```
+
 ### logLevel
 
 You can control how much output the Electrode Server logs to the console by setting the `logLevel`.

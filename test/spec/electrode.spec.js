@@ -11,7 +11,7 @@ const xstdout = require("xstdout");
 
 const HTTP_404 = 404;
 
-describe("fastify-server", function () {
+describe("fastify-server", function() {
   const logLevel = "none";
 
   this.timeout(10000);
@@ -95,6 +95,30 @@ describe("fastify-server", function () {
       });
       await server.start();
     });
+  });
+
+  it("should default keepAliveTimeout to 60 seconds", async () => {
+    server = await electrodeServer({});
+    expect(server.initialConfig.keepAliveTimeout).eq(60000);
+    expect(server.server.keepAliveTimeout).eq(60000);
+  });
+
+  it("can configure keepAliveTimeout", async () => {
+    server = await electrodeServer({
+      keepAliveTimeout: 6001
+    });
+    expect(server.initialConfig.keepAliveTimeout).eq(6001);
+    expect(server.server.keepAliveTimeout).eq(6001);
+  });
+
+  it("can configure keepAliveTimeout using electrode style", async () => {
+    server = await electrodeServer({
+      electrode: {
+        keepAliveTimeout: 6002
+      }
+    });
+    expect(server.initialConfig.keepAliveTimeout).eq(6002);
+    expect(server.server.keepAliveTimeout).eq(6002);
   });
 
   it("should fail for PORT in use", () => {
