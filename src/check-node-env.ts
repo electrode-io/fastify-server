@@ -1,4 +1,4 @@
-import * as Chalk from "chalk";
+import Chalk from "chalk";
 
 function checkNodeEnv() {
   const allowed = ["qa", "development", "staging", "production", "test"];
