@@ -1,6 +1,4 @@
-"use strict";
-
-const Chalk = require("chalk");
+import * as Chalk from "chalk";
 
 function checkNodeEnv() {
   const allowed = ["qa", "development", "staging", "production", "test"];
@@ -12,4 +10,4 @@ function checkNodeEnv() {
   return;
 }
 
-module.exports = checkNodeEnv;
+export = checkNodeEnv;

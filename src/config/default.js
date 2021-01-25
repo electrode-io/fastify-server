@@ -1,5 +1,3 @@
-"use strict";
-
 const defaultListenPort = 3000;
 
 const portFromEnv = () => {

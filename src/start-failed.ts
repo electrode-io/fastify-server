@@ -1,12 +1,10 @@
-"use strict";
-
 /* eslint-disable max-len */
 
-const Chalk = require("chalk");
-const ErrorCommon = require("./error-common");
-const _ = require("lodash");
+import Chalk from "chalk";
+import _ from "lodash";
+import ErrorCommon from "./error-common";
 
-module.exports = function startFailed(err) {
+export = function startFailed(err) {
   const errors = {
     EADDRINUSE: () => {
       return {

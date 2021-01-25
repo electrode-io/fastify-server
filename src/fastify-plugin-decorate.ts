@@ -1,6 +1,4 @@
-"use strict";
-
-const fastifyPlugin = require("fastify-plugin");
+import fastifyPlugin from "fastify-plugin";
 
 /**
  * Decorate a fastify plugin with the module fastify-plugin
@@ -9,7 +7,7 @@ const fastifyPlugin = require("fastify-plugin");
  *
  * @returns {*} plugin
  */
-const fastifyPluginDecorate = plugin => {
+export const fastifyPluginDecorate = plugin => {
   if (
     plugin.fastifyPluginDecorate !== false &&
     !plugin.register.hasOwnProperty(Symbol.for("skip-override"))
@@ -19,5 +17,3 @@ const fastifyPluginDecorate = plugin => {
 
   return plugin;
 };
-
-module.exports.fastifyPluginDecorate = fastifyPluginDecorate;
