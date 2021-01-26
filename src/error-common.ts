@@ -1,8 +1,6 @@
-"use strict";
+import Chalk from "chalk";
 
-const Chalk = require("chalk");
 const Pkg = require("../package.json");
-
 const caught = Chalk.cyan("caught");
 
 const errCommon = {
@@ -15,4 +13,4 @@ const errCommon = {
   errContext: `${Pkg.name} ${caught} an error while starting your server`
 };
 
-module.exports = errCommon;
+export = errCommon;
