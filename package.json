@@ -6,9 +6,9 @@
   "scripts": {
     "build": "tsc",
     "mv": "mkdir -p lib/config && cp src/config/**.* lib/config",
-    "prepublishOnly": "xrun [[build], xarc/check]",
-    "test": "xrun --serial [build, mv, xarc/test-only]",
-    "coverage": "xrun --serial [build, mv, xarc/test-cov]",
+    "prepublishOnly": "xrun --serial build xarc/check",
+    "test": "xrun --serial build mv xarc/test-only",
+    "coverage": "xrun --serial build mv xarc/test-cov",
     "sample": "node test/sample/index.js"
   },
   "repository": {
