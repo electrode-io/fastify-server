@@ -1,6 +1,6 @@
 import { FastifyServerOptions } from "fastify";
 
-export interface Config {
+interface _Config {
   server?: FastifyServerOptions;
   plugins?: any[];
   connection?: {
@@ -12,3 +12,5 @@ export interface Config {
   deferStart?: boolean;
   keepAliveTimeout?: number;
 }
+
+export type Config = _Config;
