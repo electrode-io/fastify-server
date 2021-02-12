@@ -1,6 +1,6 @@
 import { FastifyServerOptions } from "fastify";
 
-export interface config {
+export interface Config {
   server?: FastifyServerOptions;
   plugins?: any[];
   connection?: {
