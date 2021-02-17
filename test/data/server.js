@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use strict";
 const fastifyPlugin = require("fastify-plugin");
 

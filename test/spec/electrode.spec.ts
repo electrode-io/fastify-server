@@ -1,13 +1,18 @@
+/* eslint-disable */
+
 "use strict";
 
 const path = require("path");
-const electrodeServer = require("../..");
-const assert = require("chai").assert;
+const electrodeServer = require("../../src/electrode-server");
 const _ = require("lodash");
 const request = require("superagent");
 const xaa = require("xaa");
 const { asyncVerify, expectError, runFinally } = require("run-verify");
 const xstdout = require("xstdout");
+
+import { assert, expect } from "chai";
+
+import { ElectrodeFastifyInstance } from "../../src/types";
 
 const HTTP_404 = 404;
 
@@ -17,10 +22,10 @@ describe("fastify-server", function () {
   this.timeout(10000);
 
   beforeEach(() => {
-    process.env.PORT = 3000;
+    process.env.PORT = "3000";
   });
 
-  let server;
+  let server: ElectrodeFastifyInstance;
 
   const stopServer = s => s && s.close();
 
@@ -90,7 +95,7 @@ describe("fastify-server", function () {
       server = await electrodeServer({ deferStart: true });
       server.route({
         method: "GET",
-        path: "/",
+        url: "/",
         handler: async () => "foo"
       });
       await server.start();
@@ -128,7 +133,7 @@ describe("fastify-server", function () {
         server = await electrodeServer();
         await electrodeServer({
           connection: {
-            port: server.server.address().port
+            port: server.info.port
           },
           electrode: {
             logLevel
@@ -230,8 +235,9 @@ describe("fastify-server", function () {
     return asyncVerify(
       async () => (server = await electrodeServer(require("../data/server.js"))),
       () => {
-        assert.ok(server.testPlugin, "testPlugin missing in server");
-        assert.ok(server.es6StylePlugin, "es6StylePlugin missing in server");
+        const fserver: any = server;
+        assert.ok(fserver.testPlugin, "testPlugin missing in server");
+        assert.ok(fserver.es6StylePlugin, "es6StylePlugin missing in server");
       }
     );
   });
@@ -258,9 +264,7 @@ describe("fastify-server", function () {
     return asyncVerify(
       async () => {
         server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
-        const resp = await request.get(
-          `http://localhost:${server.server.address().port}/html/hello.html`
-        );
+        const resp = await request.get(`http://localhost:${server.info.port}/html/hello.html`);
         assert(resp, "Server didn't return response");
         assert(resp.text.includes("Hello Test!"), "response not contain expected string");
       },
@@ -525,12 +529,23 @@ describe("fastify-server", function () {
     assert.equal(server.app.config.electrode.source, "development");
   });
 
-  it("should load config based on environment", async () => {
+  it("should load production config based on environment", async () => {
     process.env.NODE_ENV = "production";
 
     try {
       server = await electrodeServer();
       assert.equal(server.app.config.electrode.source, "production");
+    } finally {
+      process.env.NODE_ENV = "test";
+    }
+  });
+
+  it("should load staging config based on environment", async () => {
+    process.env.NODE_ENV = "staging";
+
+    try {
+      server = await electrodeServer();
+      assert.equal(server.app.config.electrode.source, "staging");
     } finally {
       process.env.NODE_ENV = "test";
     }
@@ -668,7 +683,7 @@ describe("fastify-server", function () {
     const eventListener = emitter => {
       emitter.on("server-started", (data, next) => {
         saveServer = server = data.server;
-        server._close = server.close;
+        (server as any)._close = server.close;
         server.close = fakeClose;
         next(new Error("test"));
       });
@@ -701,7 +716,7 @@ describe("fastify-server", function () {
       }
     });
     expect(server.hasDecorator("utility")).true;
-    expect(server.utility()).eq("bingo");
+    expect((server as any).utility()).eq("bingo");
   });
 
   it("load plugin from the module default.fastifyPlugin field", async () => {
@@ -713,7 +728,7 @@ describe("fastify-server", function () {
       }
     });
     expect(server.hasDecorator("utility")).true;
-    expect(server.utility()).eq("bingo default.fastifyPlugin");
+    expect((server as any).utility()).eq("bingo default.fastifyPlugin");
   });
 
   it("load plugin from the module fastifyPlugin field", async () => {
@@ -725,7 +740,7 @@ describe("fastify-server", function () {
       }
     });
     expect(server.hasDecorator("utility")).true;
-    expect(server.utility()).eq("bingo fastifyPlugin");
+    expect((server as any).utility()).eq("bingo fastifyPlugin");
   });
 
   it("load plugin from the module plugin field", async () => {
@@ -737,7 +752,7 @@ describe("fastify-server", function () {
       }
     });
     expect(server.hasDecorator("utility")).true;
-    expect(server.utility()).eq("bingo plugin");
+    expect((server as any).utility()).eq("bingo plugin");
   });
 
   it("gets a fresh instance of request.app", async () => {
@@ -746,13 +761,13 @@ describe("fastify-server", function () {
     server = await electrodeServer({ deferStart: true });
     server.route({
       method: "GET",
-      path: "/",
+      url: "/",
       handler: (req, reply) => {
         if (!saveReq) {
           saveReq = req;
         }
-        reply.send(req.app.marker ? "Not Fresh" : "Fresh");
-        req.app.marker = marker;
+        reply.send((req as any).app.marker ? "Not Fresh" : "Fresh");
+        (req as any).app.marker = marker;
         server.app.marker = marker;
         marker++;
       }
@@ -770,9 +785,9 @@ describe("fastify-server", function () {
     server = await electrodeServer({ deferStart: true });
     server.route({
       method: "GET",
-      path: "/some/path",
+      url: "/some/path",
       handler: (req, reply) => {
-        reply.send(req.path);
+        reply.send((req as any).path);
       }
     });
     await server.start();
@@ -783,7 +798,7 @@ describe("fastify-server", function () {
   it("gets decorated with request.path that is accessible from hooks", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
-      reply.send(req.path);
+      reply.send((req as any).path);
       done();
     });
     await server.inject({ method: "GET", url: "/some/path?query=1" });
@@ -794,18 +809,18 @@ describe("fastify-server", function () {
   it("gets decorated with request.info.ip (injected request)", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
-      reply.send(req.info.remoteAddress);
+      reply.send((req as any).info.remoteAddress);
       done();
     });
     await server.start();
-    const resp = await request.get(`http://localhost:${server.server.address().port}/path`);
+    const resp = await request.get(`http://localhost:${server.info.port}/path`);
     expect(resp.text).to.equal("127.0.0.1");
   });
 
   it("gets decorated with request.info.ip", async () => {
     server = await electrodeServer({ deferStart: true });
     server.addHook("onRequest", (req, reply, done) => {
-      reply.send(req.info.remoteAddress);
+      reply.send((req as any).info.remoteAddress);
       done();
     });
     await server.start();

@@ -1,24 +1,19 @@
 {
   "compilerOptions": {
     "outDir": "lib",
-    "lib": [
-      "es6"
-    ],
+    "lib": ["es2020"],
     "module": "CommonJS",
     "esModuleInterop": true,
-    "target": "ES6",
+    "importHelpers": true,
+    "target": "es2020",
     "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node", "mocha"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "alwaysStrict": true,
     "strictFunctionTypes": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

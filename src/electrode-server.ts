@@ -1,11 +1,13 @@
-/* eslint-disable no-magic-numbers, prefer-template, max-len */
+/* eslint-disable no-magic-numbers, prefer-template, max-len, @typescript-eslint/no-var-requires */
 import assert from "assert";
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import _ from "lodash";
 import Path from "path";
 import checkNodeEnv from "./check-node-env";
 import startFailed from "./start-failed";
-import * as Confippet from "electrode-confippet";
+import { loadConfig, util as ConfippetUtil } from "electrode-confippet";
+
+import { ElectrodeFastifyInstance } from "./types";
 
 const AsyncEventEmitter = require("async-eventemitter");
 const requireAt = require("require-at");
@@ -13,6 +15,7 @@ const xaa = require("xaa");
 const util = require("util");
 const { fastifyPluginDecorate } = require("./fastify-plugin-decorate");
 const DEFAULT_KEEPALIVE_TIMEOUT = 60000;
+
 async function emitEvent(context, event) {
   const timeout = _.get(context, "config.electrode.eventTimeout", 10000);
   if (!context.emitter._events[event]) {
@@ -45,6 +48,7 @@ async function emitEvent(context, event) {
     throw massageError(error);
   }
 }
+
 async function convertPluginsToArray(plugins) {
   //
   // The module could either be one in node_modules or a file in a path
@@ -56,7 +60,9 @@ async function convertPluginsToArray(plugins) {
   const fullRequirePath = x => {
     return x.startsWith(".") ? Path.resolve(x) : x;
   };
+
   const topRequireFromPath = plugins.requireFromPath;
+
   assert(
     !topRequireFromPath || _.isString(topRequireFromPath),
     `config.plugins.requireFromPath must be a string`
@@ -135,12 +141,15 @@ async function convertPluginsToArray(plugins) {
     };
     return doRequire();
   };
+
   const num = x => {
     return _.isString(x) ? parseInt(x, 10) : x;
   };
+
   const checkNaN = x => {
     return isNaN(x) ? Infinity : x;
   };
+
   const priority = p => checkNaN(num(p.priority));
   const isEnable = p => p.__name !== "requireFromPath" && p.enable !== false;
   const transpose = (p, k) => Object.assign({ __name: k }, p);
@@ -149,9 +158,12 @@ async function convertPluginsToArray(plugins) {
   //
   const pluginsArray = () => _(plugins).map(transpose).filter(isEnable).sortBy(priority).value();
   // convert plugins object to array and check each one if it has a module to load.
+
   const arr = pluginsArray();
+
   return xaa.map(arr, loadModule);
 }
+
 async function startElectrodeServer(context) {
   const server = context.server;
   const config = context.config;
@@ -207,7 +219,7 @@ async function startElectrodeServer(context) {
       // must call ready to kick off the plugin registration
       await context.server.ready();
       await context.registerPluginsPromise;
-      await server.listen(config.connection.port, "0.0.0.0");
+      await server.listen(config.connection.port, config.connection.address);
       started = true;
       await emitEvent(context, "server-started");
       await emitEvent(context, "complete");
@@ -228,12 +240,18 @@ async function startElectrodeServer(context) {
   } catch (err) {
     return await handleFail(err);
   }
+
   if (!context.config.deferStart) {
     await startServer();
   }
+
   return server;
 }
-export = async function electrodeServer(appConfig = {}, decors) {
+
+export = async function electrodeServer<TConfig = any>(
+  appConfig = {} as TConfig,
+  decors
+): Promise<ElectrodeFastifyInstance> {
   const check = () => {
     checkNodeEnv();
     if (_.isArray(decors)) {
@@ -242,7 +260,9 @@ export = async function electrodeServer(appConfig = {}, decors) {
       decors = [].concat(decors).filter(_.identity);
     }
   };
+
   check();
+
   const makeFastifyServerConfig = context => {
     const fastifyServerConfig = {
       app: {
@@ -254,7 +274,7 @@ export = async function electrodeServer(appConfig = {}, decors) {
         _.get(context.config, "electrode.keepAliveTimeout", DEFAULT_KEEPALIVE_TIMEOUT)
       )
     };
-    Confippet.util.merge(fastifyServerConfig, context.config.server);
+    ConfippetUtil.merge(fastifyServerConfig, context.config.server);
     _.assign(fastifyServerConfig, context.config.connection);
     //
     // This will allow Fastify to make config available through
@@ -266,6 +286,7 @@ export = async function electrodeServer(appConfig = {}, decors) {
   const start = async context => {
     const settings = makeFastifyServerConfig(context);
     const server = (context.server = fastify(settings));
+
     const SYM_PATH = Symbol("request.path");
     const SYM_INFO = Symbol("request.info");
     // add request.path and request.info as compatibility with Hapi
@@ -326,16 +347,15 @@ export = async function electrodeServer(appConfig = {}, decors) {
   };
   const applyDecorConfigs = context => {
     // load internal defaults
-    const configOptions = {
-      dirs: [Path.join(__dirname, "config")],
+    const defaults = loadConfig({
+      dir: Path.join(__dirname, "config"),
       warnMissing: false,
       failMissing: false,
       context: {
         deployment: process.env.NODE_ENV
-      }
-    };
-    const defaults = Confippet.store();
-    defaults._$.compose(configOptions);
+      },
+      cache: false
+    });
     // apply decors
     decors.forEach(d => defaults._$.use(d));
     // apply appConfig

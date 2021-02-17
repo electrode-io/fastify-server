@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import Chalk from "chalk";
 
 const Pkg = require("../package.json");

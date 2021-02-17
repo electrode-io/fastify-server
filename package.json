@@ -6,10 +6,12 @@
   "scripts": {
     "build": "tsc",
     "mv": "mkdir -p lib/config && cp src/config/**.* lib/config",
-    "prepublishOnly": "xrun [[build], xarc/check]",
-    "test": "xrun --serial [build, mv, xarc/test-only]",
-    "coverage": "xrun --serial [build, mv, xarc/test-cov]",
-    "sample": "node test/sample/index.js"
+    "prepublishOnly": "xrun --serial build xarc/check",
+    "test": "xrun xarc/test-only",
+    "coverage": "xrun xarc/test-cov",
+    "check": "xrun xarc/check",
+    "sample": "node test/sample/index.js",
+    "docs": "xrun xarc/docs"
   },
   "repository": {
     "type": "git",
@@ -42,17 +44,19 @@
     "node": ">= 10.0.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "dependencies": {
     "async-eventemitter": "^0.2.4",
     "chalk": "^4.1.0",
-    "electrode-confippet": "^1.5.0",
-    "fastify": "^3.9.2",
+    "electrode-confippet": "^1.7.0",
+    "fastify": "^3.12.0",
     "fastify-plugin": "^3.0.0",
     "lodash": "^4.17.20",
     "require-at": "^1.0.6",
-    "xaa": "^1.6.0"
+    "tslib": "^2.1.0",
+    "xaa": "^1.6.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -62,7 +66,7 @@
     "@types/sinon": "^9.0.10",
     "@types/sinon-chai": "^3.2.5",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.14.1",
+    "@typescript-eslint/parser": "^4.11.0",
     "@xarc/module-dev": "^3.0.2",
     "@xarc/run": "^1.0.4",
     "babel-eslint": "^10.1.0",
@@ -82,10 +86,14 @@
     "source-map-support": "^0.5.19",
     "superagent": "^5.0.0",
     "ts-node": "^9.1.1",
+    "typedoc": "^0.20.13",
     "typescript": "^4.1.3",
     "xstdout": "^0.1.1"
   },
   "nyc": {
+    "extends": [
+      "@istanbuljs/nyc-config-typescript"
+    ],
     "all": true,
     "reporter": [
       "lcov",
@@ -96,30 +104,27 @@
       "*clap.js",
       "*clap.ts",
       "coverage",
-      "src",
-      "lib/*.ts",
       "docs",
+      "lib",
       "gulpfile.js",
       "test",
       "xrun*.js",
-      "xrun*.ts"
+      "xrun*.ts",
+      ".eslintrc.js"
     ],
     "check-coverage": true,
     "statements": 100,
     "branches": 100,
     "functions": 100,
     "lines": 100,
-    "cache": true,
-    "extends": [
-      "@istanbuljs/nyc-config-typescript"
-    ],
-    "exclude-after-remap": false
+    "cache": true
   },
   "@xarc/module-dev": {
     "features": [
       "eslint",
       "eslintTS",
       "mocha",
+      "typedoc",
       "typescript"
     ]
   },
@@ -131,14 +136,9 @@
     ],
     "recursive": true
   },
-  "eslintConfig": {
-    "extends": [
-      "./node_modules/@xarc/module-dev/config/eslint/.eslintrc-node"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": 2020,
-      "sourceType": "module"
+  "fyn": {
+    "dependencies": {
+      "electrode-confippet": "../electrode-confippet"
     }
   }
 }

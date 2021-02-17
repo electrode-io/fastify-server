@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function fPlugin(fastify, opts, done) {
   fastify.decorate("utility", () => {
     return "bingo";
