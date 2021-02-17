@@ -11,7 +11,7 @@ const xstdout = require("xstdout");
 
 const HTTP_404 = 404;
 
-describe("fastify-server", function() {
+describe("fastify-server", function () {
   const logLevel = "none";
 
   this.timeout(10000);
