@@ -66,7 +66,7 @@
     "@types/sinon": "^9.0.10",
     "@types/sinon-chai": "^3.2.5",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
+    "@typescript-eslint/parser": "^4.15.1",
     "@xarc/module-dev": "^3.0.2",
     "@xarc/run": "^1.0.4",
     "babel-eslint": "^10.1.0",
