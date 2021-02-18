@@ -58,9 +58,10 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#electrode-fastify-server---" id="electrode-fastify-server---" style="color: inherit; text-decoration: none;">
-					<h1>Electrode Fastify Server <a href="https://npmjs.org/package/@xarc/fastify-server"><img src="https://badge.fury.io/js/@xarc%2Ffastify-server.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/fastify-server"><img src="https://travis-ci.org/electrode-io/fastify-server.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/electrode-io/fastify-server"><img src="https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io" alt="Dependency Status"></a></h1>
+				<a href="#electrode-fastify-server-" id="electrode-fastify-server-" style="color: inherit; text-decoration: none;">
+					<h1>Electrode Fastify Server <!-- omit in toc --></h1>
 				</a>
+				<p><a href="https://npmjs.org/package/@xarc/fastify-server"><img src="https://badge.fury.io/js/@xarc%2Ffastify-server.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/fastify-server"><img src="https://travis-ci.org/electrode-io/fastify-server.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/electrode-io/fastify-server"><img src="https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io" alt="Dependency Status"></a></p>
 				<p>This is an imaginatively named, configurable web server using Fastify atop Node.js.</p>
 				<p>The aim is to provide a standardized node web server that can be used to serve your web
 				application without the need for duplicating from another example, or starting from scratch.</p>
@@ -68,49 +69,46 @@
 					functionality of a Fastify web server, and within your own application you will add on the
 				features, logic, etc unique to your situation.</p>
 				<p>This module requires Node v10.x.x+.</p>
-				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
-					<h1>Table Of Contents</h1>
+				<a href="#table-of-contents-" id="table-of-contents-" style="color: inherit; text-decoration: none;">
+					<h2>Table Of Contents <!-- omit in toc --></h2>
 				</a>
 				<ul>
-					<li>[Electrode Fastify Server <a href="https://npmjs.org/package/@xarc/fastify-server"><img src="https://badge.fury.io/js/@xarc%2Ffastify-server.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/fastify-server"><img src="https://travis-ci.org/electrode-io/fastify-server.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/electrode-io/fastify-server"><img src="https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io" alt="Dependency Status"></a>](#electrode-fastify-server-npm-versionnpm-url-build-statustravis-imagetravis-url-dependency-statusdaviddm-imagedaviddm-url)</li>
-					<li><a href="#table-of-contents">Table Of Contents</a><ul>
-							<li><a href="#installing">Installing</a></li>
-							<li><a href="#usage">Usage</a><ul>
-									<li><a href="#hello-world-example">Hello World Example</a></li>
-								</ul>
-							</li>
-							<li><a href="#configuration">Configuration</a></li>
-							<li><a href="#configuration-options">Configuration Options</a><ul>
-									<li><a href="#server-object"><code>server</code> (Object)</a></li>
-									<li><a href="#connection-object"><code>connection</code> (Object)</a></li>
-									<li><a href="#plugins-object"><code>plugins</code> (Object)</a></li>
-									<li><a href="#electrode-object"><code>electrode</code> (Object)</a></li>
-									<li><a href="#listener-function"><code>listener</code> (function)</a></li>
-									<li><a href="#loglevel">logLevel</a></li>
-								</ul>
-							</li>
-							<li><a href="#electrode-confippet">electrode-confippet</a></li>
-							<li><a href="#adding-a-fastify-plugin">Adding a Fastify plugin</a><ul>
-									<li><a href="#plugin-configs">Plugin configs</a><ul>
-											<li><a href="#about-plugin-priority">About Plugin Priority</a></li>
-											<li><a href="#more-about-register-and-module">More about register and module</a></li>
-											<li><a href="#exporting-your-fastify-plugin-from-a-module">Exporting your Fastify Plugin from a module</a></li>
-											<li><a href="#more-about-requirefrompath">More about <code>requireFromPath</code></a></li>
-											<li><a href="#plugin-timeout">Plugin timeout</a></li>
-										</ul>
-									</li>
-									<li><a href="#example-fastify-static">Example: <code>fastify-static</code></a></li>
-								</ul>
-							</li>
-							<li><a href="#api">API</a><ul>
-									<li><a href="#electrodeserver">electrodeServer</a></li>
-									<li><a href="#app-decorator"><code>app</code> decorator</a></li>
-								</ul>
-							</li>
-							<li><a href="#contributions">Contributions</a></li>
-							<li><a href="#license">License</a></li>
+					<li><a href="#installing">Installing</a></li>
+					<li><a href="#usage">Usage</a><ul>
+							<li><a href="#hello-world-example">Hello World Example</a></li>
 						</ul>
 					</li>
+					<li><a href="#configuration">Configuration</a></li>
+					<li><a href="#configuration-options">Configuration Options</a><ul>
+							<li><a href="#server-object"><code>server</code> (Object)</a></li>
+							<li><a href="#connection-object"><code>connection</code> (Object)</a></li>
+							<li><a href="#plugins-object"><code>plugins</code> (Object)</a></li>
+							<li><a href="#electrode-object"><code>electrode</code> (Object)</a></li>
+							<li><a href="#listener-function"><code>listener</code> (function)</a></li>
+							<li><a href="#keepalivetimeout-integer">keepAliveTimeout (integer)</a></li>
+							<li><a href="#loglevel">logLevel</a></li>
+						</ul>
+					</li>
+					<li><a href="#electrode-confippet">electrode-confippet</a></li>
+					<li><a href="#adding-a-fastify-plugin">Adding a Fastify plugin</a><ul>
+							<li><a href="#plugin-configs">Plugin configs</a><ul>
+									<li><a href="#about-plugin-priority">About Plugin Priority</a></li>
+									<li><a href="#more-about-register-and-module">More about register and module</a></li>
+									<li><a href="#exporting-your-fastify-plugin-from-a-module">Exporting your Fastify Plugin from a module</a></li>
+									<li><a href="#more-about-requirefrompath">More about <code>requireFromPath</code></a></li>
+									<li><a href="#plugin-timeout">Plugin timeout</a></li>
+								</ul>
+							</li>
+							<li><a href="#example-fastify-static">Example: <code>fastify-static</code></a></li>
+						</ul>
+					</li>
+					<li><a href="#api">API</a><ul>
+							<li><a href="#electrodeserver">electrodeServer</a></li>
+							<li><a href="#app-decorator"><code>app</code> decorator</a></li>
+						</ul>
+					</li>
+					<li><a href="#contributions">Contributions</a></li>
+					<li><a href="#license">License</a></li>
 				</ul>
 				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
 					<h2>Installing</h2>
