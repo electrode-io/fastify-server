@@ -250,7 +250,7 @@ async function startElectrodeServer(context) {
 
 export = async function electrodeServer<TConfig = any>(
   appConfig = {} as TConfig,
-  decors
+  decors?
 ): Promise<ElectrodeFastifyInstance> {
   const check = () => {
     checkNodeEnv();
