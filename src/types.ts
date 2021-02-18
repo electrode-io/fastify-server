@@ -86,13 +86,15 @@ export type PluginOptions = {
 /**
  * Plugins config for specifying plugins that will register with fastify
  */
-export type PluginsConfig = Record<string, PluginOptions> & {
-  /**
-   * The path as the origin dir to call require to load any plugin modules.
-   * - Note: this means you would not be able to specify a plugin with this key.
-   */
-  requireFromPath?: string;
-};
+export type PluginsConfig =
+  | Record<string, PluginOptions>
+  | {
+      /**
+       * The path as the origin dir to call require to load any plugin modules.
+       * - Note: this means you would not be able to specify a plugin with this key.
+       */
+      requireFromPath?: string;
+    };
 
 /**
  * Connection params for fastify
