@@ -1,3 +1,12 @@
+# 3.2.0 - 2021/02/17
+
+- update for typescript and config in typescript
+
+# 3.1.0 - 2021/01/05
+
+- add keep alive timeout option
+- dep: fastify@3.9.2, fastify-plugin@3.0.0, lodash@4.17.20, require-at@1.0.6
+
 # 3.0.0 - 11/03/2020
 
 - [major] upgrade to fastify 3.x
