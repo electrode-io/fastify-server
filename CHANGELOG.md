@@ -1,4 +1,11 @@
-# 3.2.0 - 2021/02/17
+# 3.2.2 - 2021/02/17
+
+- fix PluginsConfig type
+
+# 3.2.1 - 2021/02/17
+
+- fix optional param
+- # 3.2.0 - 2021/02/17
 
 - update for typescript and config in typescript
 
