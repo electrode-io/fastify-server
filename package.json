@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A configurable Fastify web server",
   "main": "lib/electrode-server.js",
   "scripts": {
@@ -18,8 +18,7 @@
     "url": "https://github.com/electrode-io/fastify-server.git"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "tag": "next",
+    "registry": "https://registry.npmjs.com/",
     "access": "public"
   },
   "prettier": {
