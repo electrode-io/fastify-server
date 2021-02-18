@@ -1,4 +1,6 @@
-# Electrode Fastify Server [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# Electrode Fastify Server <!-- omit in toc -->
+
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 This is an imaginatively named, configurable web server using Fastify atop Node.js.
 
@@ -11,35 +13,34 @@ features, logic, etc unique to your situation.
 
 This module requires Node v10.x.x+.
 
-# Table Of Contents
+## Table Of Contents <!-- omit in toc -->
 
-- [Electrode Fastify Server [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]](#electrode-fastify-server-npm-versionnpm-url-build-statustravis-imagetravis-url-dependency-statusdaviddm-imagedaviddm-url)
-- [Table Of Contents](#table-of-contents)
-  - [Installing](#installing)
-  - [Usage](#usage)
-    - [Hello World Example](#hello-world-example)
-  - [Configuration](#configuration)
-  - [Configuration Options](#configuration-options)
-    - [`server` (Object)](#server-object)
-    - [`connection` (Object)](#connection-object)
-    - [`plugins` (Object)](#plugins-object)
-    - [`electrode` (Object)](#electrode-object)
-    - [`listener` (function)](#listener-function)
-    - [logLevel](#loglevel)
-  - [electrode-confippet](#electrode-confippet)
-  - [Adding a Fastify plugin](#adding-a-fastify-plugin)
-    - [Plugin configs](#plugin-configs)
-      - [About Plugin Priority](#about-plugin-priority)
-      - [More about register and module](#more-about-register-and-module)
-      - [Exporting your Fastify Plugin from a module](#exporting-your-fastify-plugin-from-a-module)
-      - [More about `requireFromPath`](#more-about-requirefrompath)
-      - [Plugin timeout](#plugin-timeout)
-    - [Example: `fastify-static`](#example-fastify-static)
-  - [API](#api)
-    - [electrodeServer](#electrodeserver)
-    - [`app` decorator](#app-decorator)
-  - [Contributions](#contributions)
-  - [License](#license)
+- [Installing](#installing)
+- [Usage](#usage)
+  - [Hello World Example](#hello-world-example)
+- [Configuration](#configuration)
+- [Configuration Options](#configuration-options)
+  - [`server` (Object)](#server-object)
+  - [`connection` (Object)](#connection-object)
+  - [`plugins` (Object)](#plugins-object)
+  - [`electrode` (Object)](#electrode-object)
+  - [`listener` (function)](#listener-function)
+  - [keepAliveTimeout (integer)](#keepalivetimeout-integer)
+  - [logLevel](#loglevel)
+- [electrode-confippet](#electrode-confippet)
+- [Adding a Fastify plugin](#adding-a-fastify-plugin)
+  - [Plugin configs](#plugin-configs)
+    - [About Plugin Priority](#about-plugin-priority)
+    - [More about register and module](#more-about-register-and-module)
+    - [Exporting your Fastify Plugin from a module](#exporting-your-fastify-plugin-from-a-module)
+    - [More about `requireFromPath`](#more-about-requirefrompath)
+    - [Plugin timeout](#plugin-timeout)
+  - [Example: `fastify-static`](#example-fastify-static)
+- [API](#api)
+  - [electrodeServer](#electrodeserver)
+  - [`app` decorator](#app-decorator)
+- [Contributions](#contributions)
+- [License](#license)
 
 ## Installing
 
