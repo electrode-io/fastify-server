@@ -6,20 +6,14 @@ const portFromEnv = () => {
   return x !== null && !isNaN(x) ? x : defaultListenPort;
 };
 
-module.exports = {
+export default {
   server: {
     // options to pass to Fastify
   },
   connection: {
     host: process.env.HOST,
     address: process.env.HOST_IP || "0.0.0.0",
-    port: portFromEnv(),
-    routes: {
-      cors: false
-    },
-    state: {
-      ignoreErrors: true
-    }
+    port: portFromEnv()
   },
 
   plugins: {

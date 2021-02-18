@@ -1,7 +1,7 @@
-"use strict";
+/* eslint-disable */
 
-const checkNodeEnv = require("../../lib/check-node-env.js");
-const Chai = require("chai");
+import checkNodeEnv from "../../src/check-node-env";
+import { expect } from "chai";
 
 describe("process-env-abbr", function () {
   let saveEnv;
@@ -33,12 +33,12 @@ describe("process-env-abbr", function () {
   it("should print warning for unexpected NODE_ENV", function () {
     const w = process.stderr.write;
     let msg;
-    process.stderr.write = m => {
+    process.stderr.write = (m => {
       msg = m;
-    };
+    }) as any;
     process.env.NODE_ENV = "undefined";
     checkNodeEnv();
     process.stderr.write = w;
-    Chai.expect(msg).includes("should be empty or one of");
+    expect(msg).includes("should be empty or one of");
   });
 });
