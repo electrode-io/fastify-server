@@ -1,0 +1,592 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@xarc/fastify-server</title>
+	<meta name="description" content="Documentation for @xarc/fastify-server">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@xarc/fastify-server</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>@xarc/fastify-server</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#electrode-fastify-server---" id="electrode-fastify-server---" style="color: inherit; text-decoration: none;">
+					<h1>Electrode Fastify Server <a href="https://npmjs.org/package/@xarc/fastify-server"><img src="https://badge.fury.io/js/@xarc%2Ffastify-server.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/fastify-server"><img src="https://travis-ci.org/electrode-io/fastify-server.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/electrode-io/fastify-server"><img src="https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io" alt="Dependency Status"></a></h1>
+				</a>
+				<p>This is an imaginatively named, configurable web server using Fastify atop Node.js.</p>
+				<p>The aim is to provide a standardized node web server that can be used to serve your web
+				application without the need for duplicating from another example, or starting from scratch.</p>
+				<p>The intention is that you will extend via configuration, such that this provides the baseline
+					functionality of a Fastify web server, and within your own application you will add on the
+				features, logic, etc unique to your situation.</p>
+				<p>This module requires Node v10.x.x+.</p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h1>Table Of Contents</h1>
+				</a>
+				<ul>
+					<li>[Electrode Fastify Server <a href="https://npmjs.org/package/@xarc/fastify-server"><img src="https://badge.fury.io/js/@xarc%2Ffastify-server.svg" alt="NPM version"></a> <a href="https://travis-ci.org/electrode-io/fastify-server"><img src="https://travis-ci.org/electrode-io/fastify-server.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/electrode-io/fastify-server"><img src="https://david-dm.org/electrode-io/fastify-server.svg?theme=shields.io" alt="Dependency Status"></a>](#electrode-fastify-server-npm-versionnpm-url-build-statustravis-imagetravis-url-dependency-statusdaviddm-imagedaviddm-url)</li>
+					<li><a href="#table-of-contents">Table Of Contents</a><ul>
+							<li><a href="#installing">Installing</a></li>
+							<li><a href="#usage">Usage</a><ul>
+									<li><a href="#hello-world-example">Hello World Example</a></li>
+								</ul>
+							</li>
+							<li><a href="#configuration">Configuration</a></li>
+							<li><a href="#configuration-options">Configuration Options</a><ul>
+									<li><a href="#server-object"><code>server</code> (Object)</a></li>
+									<li><a href="#connection-object"><code>connection</code> (Object)</a></li>
+									<li><a href="#plugins-object"><code>plugins</code> (Object)</a></li>
+									<li><a href="#electrode-object"><code>electrode</code> (Object)</a></li>
+									<li><a href="#listener-function"><code>listener</code> (function)</a></li>
+									<li><a href="#loglevel">logLevel</a></li>
+								</ul>
+							</li>
+							<li><a href="#electrode-confippet">electrode-confippet</a></li>
+							<li><a href="#adding-a-fastify-plugin">Adding a Fastify plugin</a><ul>
+									<li><a href="#plugin-configs">Plugin configs</a><ul>
+											<li><a href="#about-plugin-priority">About Plugin Priority</a></li>
+											<li><a href="#more-about-register-and-module">More about register and module</a></li>
+											<li><a href="#exporting-your-fastify-plugin-from-a-module">Exporting your Fastify Plugin from a module</a></li>
+											<li><a href="#more-about-requirefrompath">More about <code>requireFromPath</code></a></li>
+											<li><a href="#plugin-timeout">Plugin timeout</a></li>
+										</ul>
+									</li>
+									<li><a href="#example-fastify-static">Example: <code>fastify-static</code></a></li>
+								</ul>
+							</li>
+							<li><a href="#api">API</a><ul>
+									<li><a href="#electrodeserver">electrodeServer</a></li>
+									<li><a href="#app-decorator"><code>app</code> decorator</a></li>
+								</ul>
+							</li>
+							<li><a href="#contributions">Contributions</a></li>
+							<li><a href="#license">License</a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
+					<h2>Installing</h2>
+				</a>
+				<p><code>npm i --save @xarc/fastify-server</code></p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Electrode Server comes with enough defaults such that you can spin up a Fastify server at <code>http://localhost:3000</code> with one call:</p>
+				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@xarc/fastify-server&quot;</span><span style="color: #000000">)();</span>
+</code></pre>
+				<p>Of course that doesn&#39;t do much but getting a <code>404</code> response from <code>http://localhost:3000</code>.
+					To handle your routes, you should create a Fastify plugin to install your handlers.
+				See below for configuration options on how to register your plugin through <code>@xarc/fastify-server</code>.</p>
+				<a href="#hello-world-example" id="hello-world-example" style="color: inherit; text-decoration: none;">
+					<h3>Hello World Example</h3>
+				</a>
+				<p>Here is an example with a default route to return a <code>Hello World</code> string for <code>http://localhost:3000</code>.</p>
+				<p>Through a plugin:</p>
+				<pre><code class="language-js"><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@xarc/fastify-server&quot;</span><span style="color: #000000">)({</span>
+<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">routes:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #795E26">register</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #001080">instance</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">instance</span><span style="color: #000000">.</span><span style="color: #795E26">route</span><span style="color: #000000">({</span>
+<span style="color: #000000">          </span><span style="color: #001080">method:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;GET&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">          </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">          </span><span style="color: #795E26">handler</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Hello World&quot;</span>
+<span style="color: #000000">        });</span>
+<span style="color: #000000">      }</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>Using <code>deferStart</code> flag to get a server that hasn&#39;t started yet:</p>
+				<pre><code class="language-js"><span style="color: #008000">//</span>
+<span style="color: #008000">// fastify doesn&#039;t allow adding routes after server started</span>
+<span style="color: #008000">// so need to set deferStart flag true to be able to add a route and then start the server.</span>
+<span style="color: #008000">//</span>
+<span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@xarc/fastify-server&quot;</span><span style="color: #000000">)({ </span><span style="color: #001080">deferStart:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> }).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">server</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">route</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">method:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;GET&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;/&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">handler</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Hello World&quot;</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">server</span><span style="color: #000000">.</span><span style="color: #795E26">start</span><span style="color: #000000">();</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
+					<h2>Configuration</h2>
+				</a>
+				<p>You can pass in a config object that controls every aspect of the Fastify server.</p>
+				<p>For example, if you want to spin up a server with HTTP compression off at port 9000:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">connection:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">port:</span><span style="color: #000000"> </span><span style="color: #098658">9000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">compression:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@xarc/fastify-server&quot;</span><span style="color: #000000">)(</span><span style="color: #001080">config</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>However, for a more complex application, it&#39;s recommended that you use a config composer such as <a href="https://www.npmjs.com/package/electrode-confippet">electrode-confippet</a> to manage your app configuration.</p>
+				<a href="#configuration-options" id="configuration-options" style="color: inherit; text-decoration: none;">
+					<h2>Configuration Options</h2>
+				</a>
+				<p>Sample of supported options:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #001080">server:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// options to be passed to fastify constructor</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">connection:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// host, port etc</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// specify fastify plugins to be registered</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #795E26">listener</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #001080">emitter</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// setup server startup event handlers</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">deferStart:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #008000">// don&#039;t start the server, you need to call server.start()</span>
+<span style="color: #000000">  </span><span style="color: #001080">electrode:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// options specific to Electrode such as logLevel</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
+</code></pre>
+				<p>All properties are optional (if not present, the default values shown below will be used).</p>
+				<p><code>server.app.config</code> is set to a object that&#39;s the combination of your config with <code>@xarc/fastify-server&#39;s</code> defaults applied.</p>
+				<a href="#server-object" id="server-object" style="color: inherit; text-decoration: none;">
+					<h3><code>server</code> (Object)</h3>
+				</a>
+				<ul>
+					<li>Server options to pass to <a href="https://www.fastify.io/">Fastify</a></li>
+				</ul>
+				<p><strong>Default:</strong></p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  server: {</span>
+<span style="color: #000000">    app: {</span>
+<span style="color: #000000">      electrode: </span><span style="color: #0000FF">true</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#connection-object" id="connection-object" style="color: inherit; text-decoration: none;">
+					<h3><code>connection</code> (Object)</h3>
+				</a>
+				<ul>
+					<li>Connection to setup for the Fastify server. Contains connection details for the server.</li>
+					<li>If you want multiple connections, you can start multiple instances of <code>@xarc/fastify-server</code></li>
+				</ul>
+				<p><strong>Default:</strong></p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  connection: {</span>
+<span style="color: #000000">    host: </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">HOST</span><span style="color: #000000">,</span>
+<span style="color: #000000">    address: </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">HOST_IP</span><span style="color: #000000"> || </span><span style="color: #A31515">&quot;0.0.0.0&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    port: </span><span style="color: #795E26">parseInt</span><span style="color: #000000">(</span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">PORT</span><span style="color: #000000">, </span><span style="color: #098658">10</span><span style="color: #000000">) || </span><span style="color: #098658">3000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    routes: {</span>
+<span style="color: #000000">      cors: </span><span style="color: #0000FF">true</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#plugins-object" id="plugins-object" style="color: inherit; text-decoration: none;">
+					<h3><code>plugins</code> (Object)</h3>
+				</a>
+				<ul>
+					<li>plugin registration objects, converted to an array of its values and passed to <a href="https://www.fastify.io/docs/latest/Server/#register">Fastify&#39;s <code>server.register</code></a></li>
+				</ul>
+				<p>Default is just empty object:</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  plugins: {</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#electrode-object" id="electrode-object" style="color: inherit; text-decoration: none;">
+					<h3><code>electrode</code> (Object)</h3>
+				</a>
+				<p>Configure electrode provided options.</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  electrode: {</span>
+<span style="color: #000000">    eventTimeout: </span><span style="color: #098658">5000</span><span style="color: #000000">, </span><span style="color: #008000">// milliseconds to wait for server start event listeners to return</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<ul>
+					<li><code>eventTimeout</code> - <em>optional</em> milliseconds to wait for your server start event listeners to return. <em>default</em> <code>10000</code>. Set it to <code>0</code> or <code>false</code> to disable timeout completely.</li>
+				</ul>
+				<a href="#listener-function" id="listener-function" style="color: inherit; text-decoration: none;">
+					<h3><code>listener</code> (function)</h3>
+				</a>
+				<ul>
+					<li><p>A function to install event listeners for the electrode server startup lifecycle.</p>
+					</li>
+					<li><p>The following events are supported:</p>
+						<ul>
+							<li><code>config-composed</code> - All configurations have been composed into a single one</li>
+							<li><code>server-created</code> - Fastify server created</li>
+							<li><code>plugins-sorted</code> - Plugins processed and sorted by priority</li>
+							<li><code>plugins-registered</code> - Plugins registered with Fastify</li>
+							<li><code>server-started</code> - Server started</li>
+							<li><code>complete</code> - Final step before returning</li>
+						</ul>
+					</li>
+				</ul>
+				<p>To receive events you must set <code>config.listener</code> before calling <code>electrodeServer</code>.</p>
+				<p>For example:</p>
+				<pre><code class="language-js"><span style="color: #001080">myConfig</span><span style="color: #000000">.</span><span style="color: #795E26">listener</span><span style="color: #000000"> = (</span><span style="color: #001080">emitter</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;server-created&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">data</span><span style="color: #000000">, </span><span style="color: #001080">next</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// do something</span>
+<span style="color: #000000">    </span><span style="color: #795E26">next</span><span style="color: #000000">();</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<ul>
+					<li><p>The data object will contain these: <code>emitter</code>, <code>server</code>, <code>config</code>, and <code>plugins</code>.</p>
+					</li>
+					<li><p>Depending on the stage some may not be present. For example, <code>server</code> is not available until <code>server-created</code> event and <code>plugins</code> is not available until <code>plugins-sorted</code> event.</p>
+					</li>
+					<li><p>These are async events so you have to take and call a <code>next</code> callback.</p>
+					</li>
+				</ul>
+				<a href="#keepalivetimeout-integer" id="keepalivetimeout-integer" style="color: inherit; text-decoration: none;">
+					<h3>keepAliveTimeout (integer)</h3>
+				</a>
+				<p>NodeJS defaults to 5 seconds keep-alive timeout. <code>fastify-server</code> defaults to 60 seconds timeout. If you want a custom timeout, use the <code>keepAliveTimeout</code> option (in milliseconds).</p>
+				<pre><code class="language-json"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #0451A5">&quot;keepAliveTimeout&quot;</span><span style="color: #000000">: </span><span style="color: #098658">60000</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#loglevel" id="loglevel" style="color: inherit; text-decoration: none;">
+					<h3>logLevel</h3>
+				</a>
+				<p>You can control how much output the Electrode Server logs to the console by setting the <code>logLevel</code>.</p>
+				<ul>
+					<li>Levels are <code>&quot;info&quot;</code>, <code>&quot;warn&quot;</code>, <code>&quot;error&quot;</code>, <code>&quot;none&quot;</code>.</li>
+					<li>A level of <code>&quot;warn&quot;</code> means only warnning and error messages will be printed.</li>
+					<li><strong>Default</strong> is <code>&quot;info&quot;</code></li>
+				</ul>
+				<p>For example, to suppress the banner that is shown when the server starts up:</p>
+				<pre><code><span style="color: #001080">Fastify</span><span style="color: #000000"> </span><span style="color: #001080">server</span><span style="color: #000000"> </span><span style="color: #001080">running</span><span style="color: #000000"> </span><span style="color: #001080">at</span><span style="color: #000000"> http:</span><span style="color: #008000">//mypc:4000</span>
+</code></pre>
+				<p>set the logLevel to &quot;warn&quot; or &quot;error&quot;:</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  electrode: {</span>
+<span style="color: #000000">    logLevel: </span><span style="color: #A31515">&quot;warn&quot;</span><span style="color: #000000">;</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#electrode-confippet" id="electrode-confippet" style="color: inherit; text-decoration: none;">
+					<h2>electrode-confippet</h2>
+				</a>
+				<p>To keep your environment specific configurations manageable, you can use <a href="https://www.npmjs.com/package/electrode-confippet">electrode-confippet</a>.</p>
+				<p>Once you have your config files setup according to the <a href="https://www.npmjs.com/package/electrode-confippet#configuration-files">configuration files setup</a>, you can simply pass the config object to electrode server.</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">config</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;electrode-confippet&quot;</span><span style="color: #000000">).</span><span style="color: #001080">config</span><span style="color: #000000">;</span>
+
+<span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;@xarc/fastify-server&quot;</span><span style="color: #000000">)(</span><span style="color: #001080">config</span><span style="color: #000000">);</span>
+</code></pre>
+				<a href="#adding-a-fastify-plugin" id="adding-a-fastify-plugin" style="color: inherit; text-decoration: none;">
+					<h2>Adding a Fastify plugin</h2>
+				</a>
+				<p>You can have <code>@xarc/fastify-server</code> register any Fastify plugin that you want
+				through your configuration file.</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  plugins: {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;&lt;plugin-id&gt;&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">      </span><span style="color: #001080">enable:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">options:</span><span style="color: #000000"> {},</span>
+<span style="color: #000000">      </span><span style="color: #795E26">register</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">fastify</span><span style="color: #000000">, </span><span style="color: #001080">opts</span><span style="color: #000000">, </span><span style="color: #001080">done</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span><span style="color: #795E26">done</span><span style="color: #000000">() }, </span><span style="color: #008000">// mutual exclusive with module</span>
+<span style="color: #000000">      </span><span style="color: #001080">module:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;&lt;plugin-module-name&gt;&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">requireFromPath:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #795E26">cwd</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #001080">priority:</span><span style="color: #000000"> </span><span style="color: #098658">210</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">fastifyPluginDecorate:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#plugin-configs" id="plugin-configs" style="color: inherit; text-decoration: none;">
+					<h3>Plugin configs</h3>
+				</a>
+				<ul>
+					<li><code>&lt;plugin-id&gt;</code> - ID for the plugin. Generally the module name for the plugin, which is used to load it for registration.</li>
+					<li><code>enable</code> - <em>optional</em> if set to <code>false</code> then this plugin won&#39;t be registered. If it&#39;s not set then it&#39;s considered to be <code>true</code>.</li>
+					<li><code>options</code> - <em>optional</em> Object that&#39;s passed to the plugin&#39;s register function.</li>
+					<li><code>register</code> - <em>optional</em> The Fastify plugin function. Overrides <code>module</code>.</li>
+					<li><code>module</code> - <em>optional</em> name of the module to load for the plugin instead of the <code>&lt;plugin-id&gt;</code></li>
+					<li><code>requireFromPath</code> - <em>optional</em> The path from which to call <code>require</code> to load the plugin module</li>
+					<li><code>priority</code> - <em>optional</em> integer value to indicate the plugin&#39;s registration order<ul>
+							<li>Lower value ones are register first</li>
+							<li>Default to <code>Infinity</code> if this field is missing or has no valid integer value (<code>NaN</code>) (string of number accepted)</li>
+						</ul>
+					</li>
+					<li><code>fastifyPluginDecorate</code> - <em>optional</em> fastify-server auto decorates your plugin with <a href="https://www.npmjs.com/package/fastify-plugin">fastify-plugin</a> - set this to <code>false</code> to disable this behavior. This can also be set to an object to use as options for <a href="https://www.npmjs.com/package/fastify-plugin">fastify-plugin</a>.</li>
+				</ul>
+				<a href="#about-plugin-priority" id="about-plugin-priority" style="color: inherit; text-decoration: none;">
+					<h4>About Plugin Priority</h4>
+				</a>
+				<p>Priority allows you to arrange plugins to be registered in an order you prefer. The plugins with lower priority values are registered first.</p>
+				<a href="#more-about-register-and-module" id="more-about-register-and-module" style="color: inherit; text-decoration: none;">
+					<h4>More about register and module</h4>
+				</a>
+				<p>If you don&#39;t want to use <code>&lt;plugin-id&gt;</code> to load the module, then you can optionally specify one of the following:</p>
+				<ul>
+					<li><code>register</code> - if specified, then treat as the plugin&#39;s <code>register</code> function to pass to Fastify, <strong><em>overides module</em></strong></li>
+					<li><code>module</code> - Only used if <code>register</code> is not specified<ul>
+							<li>If it&#39;s a string the used as the name module to <code>require</code> for registration.</li>
+							<li>It it&#39;s <code>false</code> then electrode server will not load any module.</li>
+							<li>You can specify a <a href="https://www.npmjs.com/package/require-from-path">require-from-path</a> for the module using an object.</li>
+						</ul>
+					</li>
+				</ul>
+				<pre><code class="language-js"><span style="color: #000000">        {</span>
+<span style="color: #000000">          plugins: {</span>
+<span style="color: #000000">            myPlugin: {</span>
+<span style="color: #000000">              module: {</span>
+<span style="color: #000000">                requireFromPath: </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #795E26">cwd</span><span style="color: #000000">(),</span>
+<span style="color: #000000">                name: </span><span style="color: #A31515">&quot;my-plugin-module&quot;</span>
+<span style="color: #000000">              }</span>
+<span style="color: #000000">            }</span>
+<span style="color: #000000">          }</span>
+<span style="color: #000000">        }</span>
+</code></pre>
+				<a href="#exporting-your-fastify-plugin-from-a-module" id="exporting-your-fastify-plugin-from-a-module" style="color: inherit; text-decoration: none;">
+					<h4>Exporting your Fastify Plugin from a module</h4>
+				</a>
+				<p>Electrode fastify server will try to find your Fastify Plugin from your module by looking through these fields:</p>
+				<ol>
+					<li><code>mod.fastifyPlugin</code></li>
+					<li><code>mod.default.fastifyPlugin</code> (ES6 Module)</li>
+					<li><code>mod.plugin</code></li>
+					<li><code>mod.default</code> (ES6 Module)</li>
+					<li><code>mod</code> itself</li>
+				</ol>
+				<p>Examples:</p>
+				<ol>
+					<li>Exporting the plugin directly as the module:</li>
+				</ol>
+				<p>CommonJS example:</p>
+				<pre><code class="language-js"><span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> = </span><span style="color: #001080">myPlugin</span><span style="color: #000000">;</span>
+</code></pre>
+				<pre><code class="language-js"><span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000">.</span><span style="color: #001080">fastifyPlugin</span><span style="color: #000000"> = </span><span style="color: #001080">myPlugin</span><span style="color: #000000">;</span>
+</code></pre>
+				<p>ES6 example:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #001080">myPlugin</span><span style="color: #000000">;</span>
+</code></pre>
+				<pre><code class="language-js"><span style="color: #0000FF">export</span><span style="color: #000000"> </span><span style="color: #001080">fastifyPlugin</span><span style="color: #000000">;</span>
+</code></pre>
+				<p>With <code>fastify-plugin</code>:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">fastifyPlugin</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;fastify-plugin&quot;</span><span style="color: #000000">);</span>
+<span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> = </span><span style="color: #795E26">fastifyPlugin</span><span style="color: #000000">(</span><span style="color: #001080">myPlugin</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;myPlugin&quot;</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#more-about-requirefrompath" id="more-about-requirefrompath" style="color: inherit; text-decoration: none;">
+					<h4>More about <code>requireFromPath</code></h4>
+				</a>
+				<p>There are three places you can specify a path to call <code>require</code> from when loading your plugin modules.</p>
+				<ol>
+					<li><code>config.plugins.requireFromPath</code> - The top one used for all plugins</li>
+					<li><code>config.plugins.&lt;plugin-id&gt;.requireFromPath</code> - Used for the specific plugin of <code>&lt;plugin-id&gt;</code>, <strong>overrides the one above</strong></li>
+					<li><code>config.plugins.&lt;plugin-id&gt;.module.requireFromPath</code> - Used for the specific plugin of <code>&lt;plugin-id&gt;</code>, <strong>overrides the two above</strong></li>
+				</ol>
+				<p>For more information: check out <a href="https://www.npmjs.com/package/require-from-path">require-from-path</a></p>
+				<a href="#plugin-timeout" id="plugin-timeout" style="color: inherit; text-decoration: none;">
+					<h4>Plugin timeout</h4>
+				</a>
+				<p>To configure the plugin timeout, use Fastify&#39;s <code>pluginTimeout</code> option.</p>
+				<pre><code class="language-json"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #0451A5">&quot;server&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">    </span><span style="color: #0451A5">&quot;pluginTimeout&quot;</span><span style="color: #000000">: </span><span style="color: #098658">10000</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Uses the Fastify default if none is specified.</p>
+				<a href="#example-fastify-static" id="example-fastify-static" style="color: inherit; text-decoration: none;">
+					<h3>Example: <code>fastify-static</code></h3>
+				</a>
+				<p><strong>Here&#39;s an example using the <code>fastify-static</code> plugin:</strong></p>
+				<p>First, install the plugin as you normally would from <code>npm</code>:</p>
+				<p><code>npm i --save fastify-static</code></p>
+				<p>Then, add your plugin to the config <code>plugins</code> section.</p>
+				<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  plugins: {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;fastify-static&quot;</span><span style="color: #000000">: {</span>
+<span style="color: #000000">      </span><span style="color: #001080">enable:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">options:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">root:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #795E26">cwd</span><span style="color: #000000">()</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      </span><span style="color: #001080">priority:</span><span style="color: #000000"> </span><span style="color: #098658">210</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">requireFromPath:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #795E26">cwd</span><span style="color: #000000">()</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Above config tells <code>@xarc/fastify-server</code> to <code>require</code> from <code>CWD</code> the module by its <code>&lt;plugin-id&gt;</code> <code>&quot;fastify-static&quot;</code> and register it as a plugin with Fastify. Options passes in the required <code>root</code> option to <code>fastify-static</code>.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p>The electrode server exports a single API.</p>
+				<a href="#electrodeserver" id="electrodeserver" style="color: inherit; text-decoration: none;">
+					<h3><a href="#electrodeserver">electrodeServer</a></h3>
+				</a>
+				<p><code>electrodeServer(config, [decors], [callback])</code></p>
+				<ul>
+					<li><p><code>config</code> is the <a href="#configuration-options">electrode server config</a></p>
+					</li>
+					<li><p><code>decors</code> - Optional extra <code>config</code> or array of <code>config</code>. In case you have common config you want to put inside a dedicated module, you can pass them in here.</p>
+						<ul>
+							<li>If it&#39;s an array like <code>[ decor1, decor2, decor3 ]</code> then each one is composed into the main config. ie: something similar to <code>_.merge(mainConfig, decor1, decor2, decor3)</code>.</li>
+						</ul>
+					</li>
+					<li><p><code>callback</code> is an optional errback with the signature <code>function (err, server)</code></p>
+						<ul>
+							<li>where <code>server</code> is the Fastify server</li>
+						</ul>
+					</li>
+					<li><p><strong>Returns:</strong> a promise resolving to the Fastify server if callback is not provided</p>
+					</li>
+				</ul>
+				<a href="#app-decorator" id="app-decorator" style="color: inherit; text-decoration: none;">
+					<h3><code>app</code> decorator</h3>
+				</a>
+				<p>Elecrode server also provides the <code>app</code> decorator on the server and request objects.
+				The <code>app</code> object contains the fully merged final <code>config</code>.</p>
+				<pre><code class="language-js"><span style="color: #000000">handler: (</span><span style="color: #001080">request</span><span style="color: #000000">, </span><span style="color: #001080">reply</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Listening on &quot;</span><span style="color: #000000">, </span><span style="color: #001080">request</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #001080">connection</span><span style="color: #000000">.</span><span style="color: #001080">port</span><span style="color: #000000">);</span>
+<span style="color: #000000">};</span>
+</code></pre>
+				<a href="#contributions" id="contributions" style="color: inherit; text-decoration: none;">
+					<h2>Contributions</h2>
+				</a>
+				<p>Make sure you sign the CLA. Checkout the <a href="https://github.com/electrode-io/electrode/blob/master/CONTRIBUTING.md">contribution guide</a></p>
+				<p>To run tests</p>
+				<pre><code class="language-sh"><span style="color: #000000">% npm i</span>
+<span style="color: #000000">% clap </span><span style="color: #795E26">test</span>
+</code></pre>
+				<p>To run tests and coverage</p>
+				<pre><code class="language-sh"><span style="color: #000000">% clap check</span>
+</code></pre>
+				<p>To run sample server</p>
+				<pre><code class="language-sh"><span style="color: #000000">% npm run sample</span>
+</code></pre>
+				<p>Hit <code>http://localhost:9000</code>
+				Hit <code>http://localhost:9000/html/hello.html</code> to test static path.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>Copyright 2016-present WalmartLabs</p>
+				<p>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/check_node_env.html">check-<wbr>node-<wbr>env</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/config_default.html">config/default</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/config_development.html">config/development</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/config_production.html">config/production</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/config_staging.html">config/staging</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/config_test.html">config/test</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/electrode_server.html">electrode-<wbr>server</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/error_common.html">error-<wbr>common</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/fastify_plugin_decorate.html">fastify-<wbr>plugin-<wbr>decorate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/start_failed.html">start-<wbr>failed</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/types.html">types</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

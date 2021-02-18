@@ -4,9 +4,9 @@
   "description": "A configurable Fastify web server",
   "main": "lib/electrode-server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf lib && tsc",
     "mv": "mkdir -p lib/config && cp src/config/**.* lib/config",
-    "prepublishOnly": "xrun --serial build xarc/check",
+    "prepublishOnly": "xrun  [[build, xarc/docs], xarc/check]",
     "test": "xrun xarc/test-only",
     "coverage": "xrun xarc/test-cov",
     "check": "xrun xarc/check",
