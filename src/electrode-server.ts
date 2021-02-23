@@ -3,8 +3,8 @@ import assert from "assert";
 import fastify from "fastify";
 import _ from "lodash";
 import Path from "path";
-import checkNodeEnv from "./check-node-env";
-import startFailed from "./start-failed";
+import { checkNodeEnv } from "./check-node-env";
+import { startFailed } from "./start-failed";
 import { loadConfig, util as ConfippetUtil } from "electrode-confippet";
 
 import { ElectrodeFastifyInstance } from "./types";
@@ -248,7 +248,15 @@ async function startElectrodeServer(context) {
   return server;
 }
 
-export = async function electrodeServer<TConfig = any>(
+/**
+ * A configuration base helper to create and start a HTTP server using fastify
+ *
+ * @param appConfig - configuration
+ * @param decors - extra decorators to add to the server
+ *
+ * @returns electrode fastify instance
+ */
+export async function electrodeServer<TConfig = any>(
   appConfig = {} as TConfig,
   decors?
 ): Promise<ElectrodeFastifyInstance> {
@@ -378,4 +386,4 @@ export = async function electrodeServer<TConfig = any>(
   ctx = applyDecorConfigs(ctx);
   await emitEvent(ctx, "config-composed");
   return await start(ctx);
-};
+}

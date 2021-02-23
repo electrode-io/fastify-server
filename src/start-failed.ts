@@ -2,9 +2,16 @@
 
 import Chalk from "chalk";
 import _ from "lodash";
-import ErrorCommon from "./error-common";
+import { ErrorCommon } from "./error-common";
 
-export = function startFailed(err) {
+/**
+ * Log as much info as possible about why starting the server failed
+ *
+ * @param err - error from failure
+ *
+ * @returns failure error
+ */
+export function startFailed(err: any): Promise<any> {
   const errors = {
     EADDRINUSE: () => {
       return {
@@ -92,4 +99,4 @@ export = function startFailed(err) {
   process.stderr.write(errDetail);
 
   return Promise.reject(err);
-};
+}

@@ -3,7 +3,7 @@
 "use strict";
 
 const path = require("path");
-const electrodeServer = require("../../src/electrode-server");
+const { electrodeServer } = require("../../src/electrode-server");
 const _ = require("lodash");
 const request = require("superagent");
 const xaa = require("xaa");

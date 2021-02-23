@@ -1,6 +1,11 @@
 import Chalk from "chalk";
 
-function checkNodeEnv() {
+/**
+ * Check the values of NODE_ENV
+ *
+ * @returns nothing
+ */
+export function checkNodeEnv(): void {
   const allowed = ["qa", "development", "staging", "production", "test"];
 
   if (process.env.NODE_ENV && !allowed.includes(process.env.NODE_ENV)) {
@@ -9,5 +14,3 @@ function checkNodeEnv() {
   }
   return;
 }
-
-export = checkNodeEnv;

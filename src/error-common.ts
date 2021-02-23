@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 import Chalk from "chalk";
 
-const Pkg = require("../package.json");
+const Pkg = require("../package.json"); // eslint-disable-line
 const caught = Chalk.cyan("caught");
 
-const errCommon = {
+export const ErrorCommon = {
   fileIssue: Chalk.green(`
     If you have followed this resolution step and you are still seeing an
     error, please file an issue on the electrode-server repository
@@ -14,5 +12,3 @@ const errCommon = {
   `),
   errContext: `${Pkg.name} ${caught} an error while starting your server`
 };
-
-export = errCommon;

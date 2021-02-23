@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import checkNodeEnv from "../../src/check-node-env";
+import { checkNodeEnv } from "../../src/check-node-env";
 import { expect } from "chai";
 
 describe("process-env-abbr", function () {
