@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FastifyLoggerInstance | @xarc/fastify-server</title>
+	<title>FastifyError | @xarc/fastify-server</title>
 	<meta name="description" content="Documentation for @xarc/fastify-server">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@xarc/fastify-server</a>
 				</li>
 				<li>
-					<a href="../modules/types.html">types</a>
+					<a href="../modules/index.html">index</a>
 				</li>
 				<li>
-					<a href="types.fastifyloggerinstance.html">FastifyLoggerInstance</a>
+					<a href="index.fastifyerror.html">FastifyError</a>
 				</li>
 			</ul>
-			<h1>Interface FastifyLoggerInstance</h1>
+			<h1>Interface FastifyError</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FastifyLoggerInstance</span>
+						<span class="tsd-signature-type">Error</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">FastifyError</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -83,18 +88,12 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#debug" class="tsd-kind-icon">debug</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#error" class="tsd-kind-icon">error</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#fatal" class="tsd-kind-icon">fatal</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#info" class="tsd-kind-icon">info</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#trace" class="tsd-kind-icon">trace</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#warn" class="tsd-kind-icon">warn</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyloggerinstance.html#child" class="tsd-kind-icon">child</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#code" class="tsd-kind-icon">code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.fastifyerror.html#validation" class="tsd-kind-icon">validation</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,90 +102,64 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="debug" class="tsd-anchor"></a>
-					<h3>debug</h3>
-					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="code" class="tsd-anchor"></a>
+					<h3>code</h3>
+					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:49</li>
+							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:12</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="error" class="tsd-anchor"></a>
-					<h3>error</h3>
-					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="message" class="tsd-anchor"></a>
+					<h3>message</h3>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:46</li>
+							<li>Defined in node_modules/.f/_/typescript/4.1.3/typescript/lib/lib.es5.d.ts:974</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="fatal" class="tsd-anchor"></a>
-					<h3>fatal</h3>
-					<div class="tsd-signature tsd-kind-icon">fatal<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:47</li>
+							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:13</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="info" class="tsd-anchor"></a>
-					<h3>info</h3>
-					<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="stack" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
+					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:44</li>
+							<li>Defined in node_modules/.f/_/typescript/4.1.3/typescript/lib/lib.es5.d.ts:975</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="trace" class="tsd-anchor"></a>
-					<h3>trace</h3>
-					<div class="tsd-signature tsd-kind-icon">trace<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="statuscode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status<wbr>Code</h3>
+					<div class="tsd-signature tsd-kind-icon">status<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:48</li>
+							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:14</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="warn" class="tsd-anchor"></a>
-					<h3>warn</h3>
-					<div class="tsd-signature tsd-kind-icon">warn<span class="tsd-signature-symbol">:</span> <a href="types.fastifylogfn.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLogFn</a></div>
+					<a name="validation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> validation</h3>
+					<div class="tsd-signature tsd-kind-icon">validation<span class="tsd-signature-symbol">:</span> <a href="index.validationresult.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidationResult</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:45</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:124</li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-					<a name="child" class="tsd-anchor"></a>
-					<h3>child</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">child<span class="tsd-signature-symbol">(</span>bindings<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Bindings</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="types.fastifyloggerinstance.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLoggerInstance</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:50</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>bindings: <span class="tsd-signature-type">Bindings</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="types.fastifyloggerinstance.html" class="tsd-signature-type" data-tsd-kind="Interface">FastifyLoggerInstance</a></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -223,10 +196,13 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/fastify_plugin_decorate.html">fastify-<wbr>plugin-<wbr>decorate</a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/start_failed.html">start-<wbr>failed</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/types.html">types</a>
 					</li>
 				</ul>
@@ -236,28 +212,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-						<a href="types.fastifyloggerinstance.html" class="tsd-kind-icon">Fastify<wbr>Logger<wbr>Instance</a>
+						<a href="index.fastifyerror.html" class="tsd-kind-icon">Fastify<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#debug" class="tsd-kind-icon">debug</a>
+								<a href="index.fastifyerror.html#code" class="tsd-kind-icon">code</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#error" class="tsd-kind-icon">error</a>
+								<a href="index.fastifyerror.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#fatal" class="tsd-kind-icon">fatal</a>
+								<a href="index.fastifyerror.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#info" class="tsd-kind-icon">info</a>
+								<a href="index.fastifyerror.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#trace" class="tsd-kind-icon">trace</a>
+								<a href="index.fastifyerror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#warn" class="tsd-kind-icon">warn</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyloggerinstance.html#child" class="tsd-kind-icon">child</a>
+								<a href="index.fastifyerror.html#validation" class="tsd-kind-icon">validation</a>
 							</li>
 						</ul>
 					</li>
@@ -275,6 +248,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">

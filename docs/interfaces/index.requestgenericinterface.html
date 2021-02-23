@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FastifyError | @xarc/fastify-server</title>
+	<title>RequestGenericInterface | @xarc/fastify-server</title>
 	<meta name="description" content="Documentation for @xarc/fastify-server">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@xarc/fastify-server</a>
 				</li>
 				<li>
-					<a href="../modules/types.html">types</a>
+					<a href="../modules/index.html">index</a>
 				</li>
 				<li>
-					<a href="types.fastifyerror.html">FastifyError</a>
+					<a href="index.requestgenericinterface.html">RequestGenericInterface</a>
 				</li>
 			</ul>
-			<h1>Interface FastifyError</h1>
+			<h1>Interface RequestGenericInterface</h1>
 		</div>
 	</div>
 </header>
@@ -72,12 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-type">Error</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">FastifyError</span>
-							</li>
-						</ul>
+						<span class="target">RequestGenericInterface</span>
 					</li>
 				</ul>
 			</section>
@@ -88,12 +83,10 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#code" class="tsd-kind-icon">code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#stack" class="tsd-kind-icon">stack</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.fastifyerror.html#validation" class="tsd-kind-icon">validation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.requestgenericinterface.html#body" class="tsd-kind-icon">Body</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.requestgenericinterface.html#headers" class="tsd-kind-icon">Headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.requestgenericinterface.html#params" class="tsd-kind-icon">Params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.requestgenericinterface.html#querystring" class="tsd-kind-icon">Querystring</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,62 +95,42 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="code" class="tsd-anchor"></a>
-					<h3>code</h3>
-					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="body" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Body</h3>
+					<div class="tsd-signature tsd-kind-icon">Body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:12</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:6</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Headers</h3>
+					<div class="tsd-signature tsd-kind-icon">Headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/typescript/4.1.3/typescript/lib/lib.es5.d.ts:974</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:9</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="params" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Params</h3>
+					<div class="tsd-signature tsd-kind-icon">Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:13</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:8</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="querystring" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Querystring</h3>
+					<div class="tsd-signature tsd-kind-icon">Querystring<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/typescript/4.1.3/typescript/lib/lib.es5.d.ts:975</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="statuscode" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status<wbr>Code</h3>
-					<div class="tsd-signature tsd-kind-icon">status<wbr>Code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/.f/_/fastify-error/0.3.0/fastify-error/index.d.ts:14</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="validation" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> validation</h3>
-					<div class="tsd-signature tsd-kind-icon">validation<span class="tsd-signature-symbol">:</span> <a href="types.validationresult.html" class="tsd-signature-type" data-tsd-kind="Interface">ValidationResult</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:124</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:7</li>
 						</ul>
 					</aside>
 				</section>
@@ -196,10 +169,13 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/fastify_plugin_decorate.html">fastify-<wbr>plugin-<wbr>decorate</a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/start_failed.html">start-<wbr>failed</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/types.html">types</a>
 					</li>
 				</ul>
@@ -209,25 +185,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-						<a href="types.fastifyerror.html" class="tsd-kind-icon">Fastify<wbr>Error</a>
+						<a href="index.requestgenericinterface.html" class="tsd-kind-icon">Request<wbr>Generic<wbr>Interface</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#code" class="tsd-kind-icon">code</a>
+								<a href="index.requestgenericinterface.html#body" class="tsd-kind-icon">Body</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#message" class="tsd-kind-icon">message</a>
+								<a href="index.requestgenericinterface.html#headers" class="tsd-kind-icon">Headers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#name" class="tsd-kind-icon">name</a>
+								<a href="index.requestgenericinterface.html#params" class="tsd-kind-icon">Params</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#stack" class="tsd-kind-icon">stack</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.fastifyerror.html#validation" class="tsd-kind-icon">validation</a>
+								<a href="index.requestgenericinterface.html#querystring" class="tsd-kind-icon">Querystring</a>
 							</li>
 						</ul>
 					</li>
@@ -245,6 +215,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">

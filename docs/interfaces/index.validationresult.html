@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RequestGenericInterface | @xarc/fastify-server</title>
+	<title>ValidationResult | @xarc/fastify-server</title>
 	<meta name="description" content="Documentation for @xarc/fastify-server">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@xarc/fastify-server</a>
 				</li>
 				<li>
-					<a href="../modules/types.html">types</a>
+					<a href="../modules/index.html">index</a>
 				</li>
 				<li>
-					<a href="types.requestgenericinterface.html">RequestGenericInterface</a>
+					<a href="index.validationresult.html">ValidationResult</a>
 				</li>
 			</ul>
-			<h1>Interface RequestGenericInterface</h1>
+			<h1>Interface ValidationResult</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">RequestGenericInterface</span>
+						<span class="target">ValidationResult</span>
 					</li>
 				</ul>
 			</section>
@@ -83,10 +83,11 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.requestgenericinterface.html#body" class="tsd-kind-icon">Body</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.requestgenericinterface.html#headers" class="tsd-kind-icon">Headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.requestgenericinterface.html#params" class="tsd-kind-icon">Params</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="types.requestgenericinterface.html#querystring" class="tsd-kind-icon">Querystring</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.validationresult.html#datapath" class="tsd-kind-icon">data<wbr>Path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.validationresult.html#keyword" class="tsd-kind-icon">keyword</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.validationresult.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.validationresult.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="index.validationresult.html#schemapath" class="tsd-kind-icon">schema<wbr>Path</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,42 +96,52 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="body" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Body</h3>
-					<div class="tsd-signature tsd-kind-icon">Body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
+					<a name="datapath" class="tsd-anchor"></a>
+					<h3>data<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">data<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:6</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:130</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="headers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Headers</h3>
-					<div class="tsd-signature tsd-kind-icon">Headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
+					<a name="keyword" class="tsd-anchor"></a>
+					<h3>keyword</h3>
+					<div class="tsd-signature tsd-kind-icon">keyword<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:9</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:129</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a name="message" class="tsd-anchor"></a>
+					<h3>message</h3>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:133</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a name="params" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Params</h3>
-					<div class="tsd-signature tsd-kind-icon">Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
+					<h3>params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:8</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:132</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="querystring" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> Querystring</h3>
-					<div class="tsd-signature tsd-kind-icon">Querystring<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unknown</span></div>
+					<a name="schemapath" class="tsd-anchor"></a>
+					<h3>schema<wbr>Path</h3>
+					<div class="tsd-signature tsd-kind-icon">schema<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/request.d.ts:7</li>
+							<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/fastify.d.ts:131</li>
 						</ul>
 					</aside>
 				</section>
@@ -169,10 +180,13 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/fastify_plugin_decorate.html">fastify-<wbr>plugin-<wbr>decorate</a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/start_failed.html">start-<wbr>failed</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/types.html">types</a>
 					</li>
 				</ul>
@@ -182,19 +196,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-						<a href="types.requestgenericinterface.html" class="tsd-kind-icon">Request<wbr>Generic<wbr>Interface</a>
+						<a href="index.validationresult.html" class="tsd-kind-icon">Validation<wbr>Result</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.requestgenericinterface.html#body" class="tsd-kind-icon">Body</a>
+								<a href="index.validationresult.html#datapath" class="tsd-kind-icon">data<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.requestgenericinterface.html#headers" class="tsd-kind-icon">Headers</a>
+								<a href="index.validationresult.html#keyword" class="tsd-kind-icon">keyword</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.requestgenericinterface.html#params" class="tsd-kind-icon">Params</a>
+								<a href="index.validationresult.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="types.requestgenericinterface.html#querystring" class="tsd-kind-icon">Querystring</a>
+								<a href="index.validationresult.html#params" class="tsd-kind-icon">params</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+								<a href="index.validationresult.html#schemapath" class="tsd-kind-icon">schema<wbr>Path</a>
 							</li>
 						</ul>
 					</li>
@@ -212,6 +229,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">

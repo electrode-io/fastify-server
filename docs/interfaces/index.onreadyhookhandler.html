@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FastifyLogFn | @xarc/fastify-server</title>
+	<title>onReadyHookHandler | @xarc/fastify-server</title>
 	<meta name="description" content="Documentation for @xarc/fastify-server">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">@xarc/fastify-server</a>
 				</li>
 				<li>
-					<a href="../modules/types.html">types</a>
+					<a href="../modules/index.html">index</a>
 				</li>
 				<li>
-					<a href="types.fastifylogfn.html">FastifyLogFn</a>
+					<a href="index.onreadyhookhandler.html">onReadyHookHandler</a>
 				</li>
 			</ul>
-			<h1>Interface FastifyLogFn</h1>
+			<h1>Interface onReadyHookHandler</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Standard Fastify logging function</p>
+						<p>Triggered when fastify.listen() or fastify.ready() is invoked to start the server. It is useful when plugins need a &quot;ready&quot; event, for example to load data before the server start listening for requests.</p>
 					</div>
 				</div>
 			</section>
@@ -79,60 +79,31 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FastifyLogFn</span>
+						<span class="target">onReadyHookHandler</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3 class="tsd-before-signature">Callable</h3>
 				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-					<li class="tsd-signature tsd-kind-icon">Fastify<wbr>Log<wbr>Fn<span class="tsd-signature-symbol">(</span>msg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					<li class="tsd-signature tsd-kind-icon">Fastify<wbr>Log<wbr>Fn<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, msg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<li class="tsd-signature tsd-kind-icon">on<wbr>Ready<wbr>Hook<wbr>Handler<span class="tsd-signature-symbol">(</span>done<span class="tsd-signature-symbol">: </span><a href="../modules/index.html#hookhandlerdonefunction" class="tsd-signature-type" data-tsd-kind="Type alias">HookHandlerDoneFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:28</li>
+								<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/hooks.d.ts:355</li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Standard Fastify logging function</p>
+								<p>Triggered when fastify.listen() or fastify.ready() is invoked to start the server. It is useful when plugins need a &quot;ready&quot; event, for example to load data before the server start listening for requests.</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>msg: <span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li>
-								<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></h5>
-							</li>
-						</ul>
-						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-					</li>
-					<li class="tsd-description">
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in node_modules/.f/_/fastify/3.12.0/fastify/types/logger.d.ts:29</li>
-							</ul>
-						</aside>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Standard Fastify logging function</p>
-							</div>
-						</div>
-						<h4 class="tsd-parameters-title">Parameters</h4>
-						<ul class="tsd-parameters">
-							<li>
-								<h5>obj: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
-							</li>
-							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> msg: <span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li>
-								<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">[]</span></h5>
+								<h5>done: <a href="../modules/index.html#hookhandlerdonefunction" class="tsd-signature-type" data-tsd-kind="Type alias">HookHandlerDoneFunction</a></h5>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -173,10 +144,13 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/fastify_plugin_decorate.html">fastify-<wbr>plugin-<wbr>decorate</a>
 					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/index.html">index</a>
+					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/start_failed.html">start-<wbr>failed</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/types.html">types</a>
 					</li>
 				</ul>
@@ -186,7 +160,7 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-						<a href="types.fastifylogfn.html" class="tsd-kind-icon">Fastify<wbr>Log<wbr>Fn</a>
+						<a href="index.onreadyhookhandler.html" class="tsd-kind-icon">on<wbr>Ready<wbr>Hook<wbr>Handler</a>
 					</li>
 				</ul>
 				<ul class="after-current">
@@ -202,6 +176,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
