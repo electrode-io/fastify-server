@@ -19,25 +19,6 @@ export interface ElectrodeFastifyInstance extends FastifyInstance {
   info: ServerInfo;
   start: () => Promise<any>;
   app: { config: any } & Record<string, any>;
-  /**
-   * FastifyInstance doesn't type initialConfig
-   *
-   */
-  initialConfig: {
-    keepAliveTimeout: number;
-    connectionTimeout: number;
-    requestIdHeader: string;
-    requestIdLogLabel: string;
-    disableRequestLogging: boolean;
-    bodyLimit: number;
-    caseSensitive: boolean;
-    ignoreTrailingSlash: boolean;
-    maxParamLength: number;
-    onProtoPoisoning: string;
-    onConstructorPoisoning: string;
-    pluginTimeout: number;
-    http2SessionTimeout: number;
-  };
 }
 
 /**
