@@ -1,24 +1,32 @@
-import {
-  FastifyServerOptions,
-  FastifyPluginOptions,
-  FastifyPluginCallback,
-  FastifyInstance
-} from "fastify";
-
-//
-// re-export fastify types
-//
-export * from "fastify";
+import { FastifyInstance, ServerOptions } from "fastify";
 
 export type ServerInfo = {
   address: string;
   port: number;
 };
-
 export interface ElectrodeFastifyInstance extends FastifyInstance {
   info: ServerInfo;
   start: () => Promise<any>;
   app: { config: any } & Record<string, any>;
+  /**
+   * FastifyInstance doesn't type initialConfig
+   *
+   */
+  initialConfig: {
+    keepAliveTimeout: number;
+    connectionTimeout: number;
+    requestIdHeader: string;
+    requestIdLogLabel: string;
+    disableRequestLogging: boolean;
+    bodyLimit: number;
+    caseSensitive: boolean;
+    ignoreTrailingSlash: boolean;
+    maxParamLength: number;
+    onProtoPoisoning: string;
+    onConstructorPoisoning: string;
+    pluginTimeout: number;
+    http2SessionTimeout: number;
+  };
 }
 
 /**
@@ -56,12 +64,12 @@ export type PluginOptions = {
    *
    * - If this is set, then `module` field is ignored.
    */
-  register?: FastifyPluginCallback;
+  register?: any;
 
   /**
    * options that will be passed to the plugin's register function
    */
-  options?: FastifyPluginOptions;
+  options?: any;
 };
 
 /**
@@ -121,7 +129,7 @@ export type ElectrodeServerConfig = {
    */
   plugins?: PluginsConfig;
   /** options to be passed to fastify verbatim */
-  server?: FastifyServerOptions;
+  server?: ServerOptions;
   /** settings specific to Electrode's add-ons for the fastify server */
   electrode?: ElectrodeOptions;
 };

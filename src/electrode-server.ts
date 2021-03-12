@@ -292,7 +292,7 @@ export async function electrodeServer<TConfig = any>(
     return fastifyServerConfig;
   };
   const start = async context => {
-    const settings = makeFastifyServerConfig(context);
+    const settings: any = makeFastifyServerConfig(context);
     const server = (context.server = fastify(settings));
 
     const SYM_PATH = Symbol("request.path");

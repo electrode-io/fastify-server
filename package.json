@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "3.3.0",
+  "version": "2.1.0",
   "description": "A configurable Fastify web server",
   "main": "index.js",
   "types": "./lib/index.d",
@@ -19,7 +19,8 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/",
-    "access": "public"
+    "access": "public",
+    "tag": "ver2"
   },
   "prettier": {
     "printWidth": 100,
@@ -50,8 +51,8 @@
     "async-eventemitter": "^0.2.4",
     "chalk": "^4.1.0",
     "electrode-confippet": "^1.7.0",
-    "fastify": "^3.13.0",
-    "fastify-plugin": "^3.0.0",
+    "fastify": "^2.15.2",
+    "fastify-plugin": "^1.6.1",
     "lodash": "^4.17.21",
     "require-at": "^1.0.6",
     "tslib": "^2.1.0",
