@@ -13,7 +13,6 @@ export interface ElectrodeFastifyInstance extends FastifyInstance {
    *
    */
   initialConfig: {
-    keepAliveTimeout: number;
     connectionTimeout: number;
     requestIdHeader: string;
     requestIdLogLabel: string;
@@ -103,8 +102,6 @@ export type ConnectionConfig = {
 export type ElectrodeOptions = {
   /** timeout in milliseconds to wait for events such as register plugins */
   eventTimeout?: number;
-  /** keep alive connection timeout in milliseconds. **Default**: `60000` */
-  keepAliveTimeout?: number;
 };
 
 /**

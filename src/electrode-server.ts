@@ -14,7 +14,6 @@ const requireAt = require("require-at");
 const xaa = require("xaa");
 const util = require("util");
 const { fastifyPluginDecorate } = require("./fastify-plugin-decorate");
-const DEFAULT_KEEPALIVE_TIMEOUT = 60000;
 
 async function emitEvent(context, event) {
   const timeout = _.get(context, "config.electrode.eventTimeout", 10000);
@@ -275,12 +274,7 @@ export async function electrodeServer<TConfig = any>(
     const fastifyServerConfig = {
       app: {
         electrodeServer: true
-      },
-      keepAliveTimeout: _.get(
-        context.config,
-        "keepAliveTimeout",
-        _.get(context.config, "electrode.keepAliveTimeout", DEFAULT_KEEPALIVE_TIMEOUT)
-      )
+      }
     };
     ConfippetUtil.merge(fastifyServerConfig, context.config.server);
     _.assign(fastifyServerConfig, context.config.connection);
