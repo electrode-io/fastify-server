@@ -341,7 +341,9 @@ describe("fastify-server", function () {
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes(
-          "plugin 'test' with register function timeout - did you return a resolved promise?"
+          "failed registering your plugin 'test' with register function\nPlugin did not start in time: 'test'. You may have forgotten to call 'done' function or to resolve a Promise"
+          // Avvio has been updated, so this error message is not reliable.
+          // "plugin 'test' with register function timeout - did you return a resolved promise?"
         );
       },
       runFinally(() => intercept.restore())

@@ -2,8 +2,8 @@
 
 "use strict";
 
+const fastifyStatic = require("@fastify/static");
 const fastifyPlugin = require("fastify-plugin");
-const fastifyStatic = require("fastify-static");
 const Path = require("path");
 const Chalk = require("chalk");
 //
@@ -41,5 +41,5 @@ const StaticPaths = async (server, options) => {
 
 module.exports = fastifyPlugin(StaticPaths, {
   name: "electrodeServerStaticPaths",
-  dependencies: ["fastify-static"]
+  dependencies: ["@fastify/static"]
 });

@@ -19,6 +19,8 @@ _book
 *.mobi
 *.pdf
 
+## local tester folder
+tester
 
 ### OSX ###
 .DS_Store
