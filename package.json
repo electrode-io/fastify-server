@@ -1,12 +1,11 @@
 {
-  "name": "@xarc-dev/fastify-server",
-  "version": "4.0.0",
+  "name": "@xarc/fastify-server",
+  "version": "4.0.1",
   "description": "A configurable Fastify web server",
   "main": "index.js",
   "types": "./lib/index.d",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "prepublishOnly": "xrun [[build, docs], xarc/check]",
     "test": "xrun xarc/test-only",
     "coverage": "xrun xarc/test-cov",
     "check": "xrun xarc/check",
