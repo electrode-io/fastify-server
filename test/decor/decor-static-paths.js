@@ -6,7 +6,7 @@ const path = require("path");
 
 module.exports = {
   plugins: {
-    "fastify-static": {
+    "@fastify/static": {
       priority: 100,
       options: {
         root: path.join(__dirname, "../dist")

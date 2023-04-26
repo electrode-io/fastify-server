@@ -12,5 +12,4 @@ export function checkNodeEnv(): void {
     const msg = `Electrode Server Notice: NODE_ENV (${process.env.NODE_ENV}) should be empty or one of ${allowed}`; // eslint-disable-line
     process.stderr.write(`    ${Chalk.inverse.bold.yellow(msg)}\n`);
   }
-  return;
 }

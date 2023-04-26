@@ -245,6 +245,8 @@ describe("fastify-server", function () {
   it("should return static file", () => {
     const config = {
       server: {
+        host: "127.0.0.1",
+        port: 3000,
         logger: { level: "info" }
       },
       plugins: {
@@ -264,7 +266,7 @@ describe("fastify-server", function () {
     return asyncVerify(
       async () => {
         server = await electrodeServer(config, [require("../decor/decor-static-paths")]);
-        const resp = await request.get(`http://localhost:${server.info.port}/html/hello.html`);
+        const resp = await request.get(`http://127.0.0.1:${server.info.port}/html/hello.html`);
         assert(resp, "Server didn't return response");
         assert(resp.text.includes("Hello Test!"), "response not contain expected string");
       },
@@ -341,7 +343,9 @@ describe("fastify-server", function () {
       error => {
         expect(error).to.be.an("Error");
         expect(error.message).includes(
-          "plugin 'test' with register function timeout - did you return a resolved promise?"
+          "failed registering your plugin 'test' with register function\nPlugin did not start in time: 'test'. You may have forgotten to call 'done' function or to resolve a Promise"
+          // Avvio has been updated, so this error message is not reliable.
+          // "plugin 'test' with register function timeout - did you return a resolved promise?"
         );
       },
       runFinally(() => intercept.restore())
@@ -813,7 +817,7 @@ describe("fastify-server", function () {
       done();
     });
     await server.start();
-    const resp = await request.get(`http://localhost:${server.info.port}/path`);
+    const resp = await request.get(`http://127.0.0.1:${server.info.port}/path`);
     expect(resp.text).to.equal("127.0.0.1");
   });
 

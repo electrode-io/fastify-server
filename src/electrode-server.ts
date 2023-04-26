@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers, prefer-template, max-len, @typescript-eslint/no-var-requires */
 import assert from "assert";
-import fastify from "fastify";
+import fastify, { FastifyInstance, FastifyListenOptions } from "fastify";
 import _ from "lodash";
 import Path from "path";
 import { checkNodeEnv } from "./check-node-env";
@@ -164,8 +164,8 @@ async function convertPluginsToArray(plugins) {
   return xaa.map(arr, loadModule);
 }
 
-async function startElectrodeServer(context) {
-  const server = context.server;
+async function startElectrodeServer(context): Promise<ElectrodeFastifyInstance> {
+  const server = <ElectrodeFastifyInstance>context.server;
   const config = context.config;
   let started = false;
   const registerPlugins = async plugins => {
@@ -214,12 +214,16 @@ async function startElectrodeServer(context) {
     }
     return await startFailed(err);
   };
-  const startServer = async () => {
+  const startServer = async (): Promise<void> => {
     try {
       // must call ready to kick off the plugin registration
       await context.server.ready();
       await context.registerPluginsPromise;
-      await server.listen(config.connection.port, config.connection.address);
+      await server.listen(<FastifyListenOptions>{
+
+        port: config.connection.port,
+        host: config.connection.address
+      });
       started = true;
       await emitEvent(context, "server-started");
       await emitEvent(context, "complete");
@@ -227,7 +231,7 @@ async function startElectrodeServer(context) {
       await handleFail(err);
     }
   };
-  const setupServer = async () => {
+  const setupServer = async (): Promise<void> => {
     context.server.decorate("start", startServer);
     await emitEvent(context, "server-created");
     const plugins = await convertPluginsToArray(config.plugins);

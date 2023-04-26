@@ -5,10 +5,12 @@ import {
   FastifyInstance
 } from "fastify";
 
+import * as Fastify from "fastify";
+
 //
 // re-export fastify types
 //
-export * from "fastify";
+export { Fastify };
 
 export type ServerInfo = {
   address: string;
