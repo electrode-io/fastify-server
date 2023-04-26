@@ -11,7 +11,7 @@ The intention is that you will extend via configuration, such that this provides
 functionality of a Fastify web server, and within your own application you will add on the
 features, logic, etc unique to your situation.
 
-This module requires Node v10.x.x+.
+This module requires Node v14.x.x+.
 
 ## Table Of Contents <!-- omit in toc -->
 
