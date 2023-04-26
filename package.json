@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "description": "A configurable Fastify web server",
   "main": "index.js",
   "types": "./lib/index.d",
@@ -18,8 +18,7 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/",
-    "access": "public",
-    "tag": "next"
+    "access": "public"
   },
   "prettier": {
     "printWidth": 100,
