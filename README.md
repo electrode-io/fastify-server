@@ -101,13 +101,11 @@ require("@xarc/fastify-server")({ deferStart: true }).then(server => {
 
 You can pass in a config object that controls every aspect of the Fastify server.
 
-For example, if you want to spin up a server with HTTP compression off at port 9000:
 
 ```js
 const config = {
   connection: {
     port: 9000,
-    compression: false
   }
 };
 
@@ -470,7 +468,24 @@ handler: (request, reply) => {
   console.log("Listening on ", request.app.config.connection.port);
 };
 ```
+## Enable compression
 
+In Fastify compression can be achieved using [@fastify/compress](https://github.com/fastify/fastify-compress#fastifycompress)
+```js
+  '@fastify/compress':{
+      priority: 200,
+      options: 
+        { global: true, encodings:['gzip'] }    
+  },
+```
+Currently, the following encoding tokens are supported, using the first acceptable token in this order:
+```js
+br
+gzip
+deflate
+* (no preference — @fastify/compress will use gzip)
+identity (no compression)
+```
 ## Contributions
 
 Make sure you sign the CLA. Checkout the [contribution guide](https://github.com/electrode-io/electrode/blob/master/CONTRIBUTING.md)
