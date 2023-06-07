@@ -5,22 +5,38 @@ import {
   FastifyInstance
 } from "fastify";
 
-import * as Fastify from "fastify";
-
-//
-// re-export fastify types
-//
-export { Fastify };
+/* eslint-disable max-len */
+export type {
+  LightMyRequestChain, InjectOptions, LightMyRequestResponse, LightMyRequestCallback, // 'light-my-request'
+  FastifyRequest, RequestGenericInterface, // './types/request'
+  FastifyReply, // './types/reply'
+  FastifyPluginCallback, FastifyPluginAsync, FastifyPluginOptions, FastifyPlugin, // './types/plugin'
+  FastifyListenOptions, FastifyInstance, PrintRoutesOptions, // './types/instance'
+  FastifyLoggerOptions, FastifyBaseLogger, FastifyLoggerInstance, FastifyLogFn, LogLevel, // './types/logger'
+  FastifyContext, FastifyContextConfig, // './types/context'
+  RouteHandler, RouteHandlerMethod, RouteOptions, RouteShorthandMethod, RouteShorthandOptions, RouteShorthandOptionsWithHandler, RouteGenericInterface, // './types/route'
+  FastifyRegister, FastifyRegisterOptions, RegisterOptions, // './types/register'
+  FastifyBodyParser, FastifyContentTypeParser, AddContentTypeParser, hasContentTypeParser, getDefaultJsonParser, ProtoAction, ConstructorAction, // './types/content-type-parser'
+  FastifyError, // '@fastify/error'
+  FastifySchema, FastifySchemaCompiler, // './types/schema'
+  HTTPMethods, RawServerBase, RawRequestDefaultExpression, RawReplyDefaultExpression, RawServerDefault, ContextConfigDefault, RequestBodyDefault, RequestQuerystringDefault, RequestParamsDefault, RequestHeadersDefault, // './types/utils'
+  DoneFuncWithErrOrRes, HookHandlerDoneFunction, RequestPayload, onCloseAsyncHookHandler, onCloseHookHandler, onErrorAsyncHookHandler, onErrorHookHandler, onReadyAsyncHookHandler, onReadyHookHandler, onRegisterHookHandler, onRequestAsyncHookHandler, onRequestHookHandler, onResponseAsyncHookHandler, onResponseHookHandler, onRouteHookHandler, onSendAsyncHookHandler, onSendHookHandler, onTimeoutAsyncHookHandler, onTimeoutHookHandler, preHandlerAsyncHookHandler, preHandlerHookHandler, preParsingAsyncHookHandler, preParsingHookHandler, preSerializationAsyncHookHandler, preSerializationHookHandler, preValidationAsyncHookHandler, preValidationHookHandler, // './types/hooks'
+  FastifyServerFactory, FastifyServerFactoryHandler, // './types/serverFactory'
+  FastifyTypeProvider, FastifyTypeProviderDefault, // './types/type-provider'
+  FastifyErrorCodes, // './types/errors'
+} from "fastify";
+/* eslint-enable max-len */
 
 export type ServerInfo = {
   address: string;
   port: number;
 };
 
-export interface ElectrodeFastifyInstance extends FastifyInstance {
-  info: ServerInfo;
-  start: () => Promise<any>;
-  app: { config: any } & Record<string, any>;
+export interface ElectrodeFastifyInstance
+  extends FastifyInstance {
+    info: ServerInfo;
+    start: () => Promise<any>;
+    app: { config: any } & Record<string, any>;
 }
 
 /**
