@@ -81,7 +81,7 @@
     "eslint-plugin-tsdoc": "^0.2.11",
     "intercept-stdout": "^0.1.2",
     "mitm": "^1.2.0",
-    "mocha": "^8.2.1",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "run-verify": "^1.2.1",
     "sinon": "^9.2.2",
