@@ -6,6 +6,7 @@
   "types": "./lib/index.d",
   "scripts": {
     "build": "rm -rf lib && tsc",
+    "prepublishOnly": "rm -rf lib && tsc && xrun xarc/check",
     "test": "xrun xarc/test-only",
     "coverage": "xrun xarc/test-cov",
     "check": "xrun xarc/check",
