@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "A configurable Fastify web server",
   "main": "index.js",
   "types": "./lib/index.d",
