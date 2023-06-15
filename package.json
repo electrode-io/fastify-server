@@ -85,9 +85,9 @@
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
     "superagent": "^5.0.0",
-    "ts-node": "^9.1.1",
-    "typedoc": "^0.20.13",
-    "typescript": "^4.1.3",
+    "ts-node": "9.1.1",
+    "typedoc": "0.20.13",
+    "typescript": "4.1.3",
     "xstdout": "^0.1.1"
   },
   "nyc": {
