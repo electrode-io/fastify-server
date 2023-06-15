@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A configurable Fastify web server",
   "main": "lib/electrode-server.js",
   "scripts": {
