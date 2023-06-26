@@ -489,7 +489,7 @@ identity (no compression)
 
 ## Increase bodyLimit Size
 ```js
-server: {
+    server: {
     bodyLimit : 1048576//new size limit
   }
 ```
