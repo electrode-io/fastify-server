@@ -486,6 +486,12 @@ deflate
 * (no preference — @fastify/compress will use gzip)
 identity (no compression)
 ```
+## Increase bodyLimit Size
+```js
+    server: {
+    bodyLimit : 1048576//new size limit
+  }
+```  
 ## Contributions
 
 Make sure you sign the CLA. Checkout the [contribution guide](https://github.com/electrode-io/electrode/blob/master/CONTRIBUTING.md)
