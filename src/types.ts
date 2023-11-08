@@ -13,7 +13,7 @@ export type {
   FastifyPluginCallback, FastifyPluginAsync, FastifyPluginOptions, FastifyPlugin, // './types/plugin'
   FastifyListenOptions, FastifyInstance, PrintRoutesOptions, // './types/instance'
   FastifyLoggerOptions, FastifyBaseLogger, FastifyLoggerInstance, FastifyLogFn, LogLevel, // './types/logger'
-  FastifyContext, FastifyContextConfig, // './types/context'
+  FastifyRequestContext, FastifyContextConfig, FastifyReplyContext, // './types/context'
   RouteHandler, RouteHandlerMethod, RouteOptions, RouteShorthandMethod, RouteShorthandOptions, RouteShorthandOptionsWithHandler, RouteGenericInterface, // './types/route'
   FastifyRegister, FastifyRegisterOptions, RegisterOptions, // './types/register'
   FastifyBodyParser, FastifyContentTypeParser, AddContentTypeParser, hasContentTypeParser, getDefaultJsonParser, ProtoAction, ConstructorAction, // './types/content-type-parser'

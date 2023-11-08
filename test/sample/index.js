@@ -21,7 +21,7 @@ const config = {
     port: 9000
   },
   plugins: {
-    "fastify-static": {
+    "@fastify/static": {
       priority: 100,
       options: {
         root: path.join(__dirname, "../dist")

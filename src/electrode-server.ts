@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers, prefer-template, max-len, @typescript-eslint/no-var-requires */
 import assert from "assert";
-import fastify, { FastifyInstance, FastifyListenOptions } from "fastify";
+import fastify, { FastifyListenOptions } from "fastify";
 import _ from "lodash";
 import Path from "path";
 import { checkNodeEnv } from "./check-node-env";
