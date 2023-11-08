@@ -40,6 +40,10 @@
     {
       "name": "Kyle Jeske",
       "email": "kyle.jeske@walmart.com"
+    },
+    {
+      "name": "Srinath Muthyala",
+      "email": "srinath.reddy.muthyala@walmart.com"
     }
   ],
   "license": "Apache-2.0",
@@ -69,11 +73,11 @@
     "@types/node": "^14.14.16",
     "@types/sinon": "^9.0.10",
     "@types/sinon-chai": "^3.2.5",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
     "@xarc/module-dev": "^4.0.0",
     "@xarc/run": "^1.0.4",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.22.15",
     "chai": "^4.2.0",
     "eslint": "^7.16.0",
     "eslint-config-walmart": "^2.2.1",
@@ -85,13 +89,13 @@
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "run-verify": "^1.2.1",
-    "sinon": "^9.2.2",
+    "sinon": "^17.0.1",
     "sinon-chai": "^3.5.0",
     "source-map-support": "^0.5.19",
-    "superagent": "^5.0.0",
+    "superagent": "^7.0.0",
     "ts-node": "^10.9.1",
-    "typedoc": "^0.23.25",
-    "typescript": "^4.1.3",
+    "typedoc": "^0.25.3",
+    "typescript": "^5.0.0",
     "xstdout": "^0.1.1"
   },
   "nyc": {
