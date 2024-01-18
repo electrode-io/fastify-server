@@ -154,7 +154,7 @@ All properties are optional (if not present, the default values shown below will
 {
   server: {
     app: {
-      electrode: true
+      electrode: true;
     }
   }
 }
