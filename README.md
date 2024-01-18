@@ -39,6 +39,8 @@ This module requires Node v14.x.x+.
 - [API](#api)
   - [electrodeServer](#electrodeserver)
   - [`app` decorator](#app-decorator)
+- [Enable compression](#enable-compression)
+- [Increase bodyLimit Size](#increase-bodylimit-size)
 - [Contributions](#contributions)
 - [License](#license)
 
@@ -152,7 +154,7 @@ All properties are optional (if not present, the default values shown below will
 {
   server: {
     app: {
-      electrode:.toBe(true);
+      electrode: true
     }
   }
 }
