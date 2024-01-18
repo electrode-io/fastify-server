@@ -1,16 +1,14 @@
 /* eslint-disable */
-
 import { checkNodeEnv } from "../../src/check-node-env";
-import { expect } from "chai";
 
 describe("process-env-abbr", function () {
   let saveEnv;
 
-  before(() => {
+  beforeEach(() => {
     saveEnv = process.env.NODE_ENV;
   });
 
-  after(() => {
+  afterEach(() => {
     if (saveEnv === undefined) {
       delete process.env.NODE_ENV;
     } else {
@@ -39,6 +37,6 @@ describe("process-env-abbr", function () {
     process.env.NODE_ENV = "undefined";
     checkNodeEnv();
     process.stderr.write = w;
-    expect(msg).includes("should be empty or one of");
+    expect(msg).toMatch("should be empty or one of");
   });
 });

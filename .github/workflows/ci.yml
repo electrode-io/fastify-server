@@ -1,7 +1,7 @@
 name: ci
 on:
   push:
-    branches: ['*']
+    branches: ["*"]
   pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [14.x,16.x,18.x,20.x]
+        node: [14.x, 16.x, 18.x, 20.x]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - run: npm i
-      - run: npm run coverage
+      - run: npm run test
         env:
           CI: true
