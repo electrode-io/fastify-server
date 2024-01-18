@@ -194,7 +194,7 @@ async function startElectrodeServer(context): Promise<ElectrodeFastifyInstance> 
     // - all register must be called before calling server.ready
     // - but registration only executed after server.ready is called
     // - So 1st call must setup all register calls and promises
-    // -    2nd call calls afterEach(), but actual execution wait for server.ready
+    // -    2nd call calls after(), but actual execution wait for server.ready
     // -    3rd call wait for all registration to complete
     //
     const regPromises = plugins.map(async plugin => {
