@@ -17,14 +17,8 @@ const config: Config = {
     }
   },
   coverageDirectory: "coverage",
-  // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
-
   coverageProvider: "v8",
   maxWorkers: 1,
-  // testMatch: ["test/**/__tests__/**/*.[jt]s?(x)", "test/**/?(*.)+(spec|test).[tj]s?(x)"]
   testPathIgnorePatterns: ["/node_modules/", "/lib/", "src/config/test.ts"]
 };
 
