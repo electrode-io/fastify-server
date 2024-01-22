@@ -8,10 +8,9 @@
     "build": "rm -rf lib && tsc",
     "prepublishOnly": "rm -rf lib && tsc && xrun xarc/check",
     "test": "jest",
-    "coverage": "jest --collectCoverage",
     "lint": "eslint",
     "format": "prettier . --write",
-    "format:check": "prettier . --write",
+    "format:check": "prettier . --check",
     "check": "run-p lint format:check",
     "sample": "node test/sample/index.js"
   },
