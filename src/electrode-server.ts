@@ -392,4 +392,4 @@ export async function electrodeServer<TConfig = any>(
   return await start(ctx);
 }
 
-export { default as fastify } from 'fastify';
+export { default as fastify } from "fastify";
