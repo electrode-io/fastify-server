@@ -391,3 +391,5 @@ export async function electrodeServer<TConfig = any>(
   await emitEvent(ctx, "config-composed");
   return await start(ctx);
 }
+
+export { default as fastify } from 'fastify';
