@@ -1,6 +1,6 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "A configurable Fastify web server",
   "main": "index.js",
   "types": "./lib/index.d",
@@ -16,10 +16,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/electrode-io/fastify-server.git"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
   },
   "prettier": {
     "printWidth": 100,
