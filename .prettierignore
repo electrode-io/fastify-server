@@ -1,0 +1,4 @@
+# docs †o be purged in separate changeset for less PR thrash
+docs
+CHANGELOG.md
+lib

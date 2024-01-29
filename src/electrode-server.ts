@@ -220,7 +220,6 @@ async function startElectrodeServer(context): Promise<ElectrodeFastifyInstance> 
       await context.server.ready();
       await context.registerPluginsPromise;
       await server.listen(<FastifyListenOptions>{
-
         port: config.connection.port,
         host: config.connection.address
       });

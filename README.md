@@ -39,6 +39,8 @@ This module requires Node v14.x.x+.
 - [API](#api)
   - [electrodeServer](#electrodeserver)
   - [`app` decorator](#app-decorator)
+- [Enable compression](#enable-compression)
+- [Increase bodyLimit Size](#increase-bodylimit-size)
 - [Contributions](#contributions)
 - [License](#license)
 
@@ -101,11 +103,10 @@ require("@xarc/fastify-server")({ deferStart: true }).then(server => {
 
 You can pass in a config object that controls every aspect of the Fastify server.
 
-
 ```js
 const config = {
   connection: {
-    port: 9000,
+    port: 9000
   }
 };
 
@@ -468,17 +469,21 @@ handler: (request, reply) => {
   console.log("Listening on ", request.app.config.connection.port);
 };
 ```
+
 ## Enable compression
 
 In Fastify compression can be achieved using [@fastify/compress](https://github.com/fastify/fastify-compress#fastifycompress)
+
 ```js
   '@fastify/compress':{
       priority: 200,
-      options: 
-        { global: true, encodings:['gzip'] }    
+      options:
+        { global: true, encodings:['gzip'] }
   },
 ```
+
 Currently, the following encoding tokens are supported, using the first acceptable token in this order:
+
 ```js
 br
 gzip
@@ -486,12 +491,15 @@ deflate
 * (no preference — @fastify/compress will use gzip)
 identity (no compression)
 ```
+
 ## Increase bodyLimit Size
+
 ```js
-    server: {
-    bodyLimit : 1048576//new size limit
-  }
-```  
+server: {
+  bodyLimit: 1048576; //new size limit
+}
+```
+
 ## Contributions
 
 Make sure you sign the CLA. Checkout the [contribution guide](https://github.com/electrode-io/electrode/blob/master/CONTRIBUTING.md)
