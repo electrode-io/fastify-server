@@ -343,7 +343,7 @@ describe("fastify-server", function () {
     return asyncVerify(
       expectError(() => electrodeServer(options)),
       error => {
-        expect(error.constructor.name).toBe("AvvioError");
+        expect(error.constructor.name).toBe("FastifyError");
         expect(error.message).toMatch(/failed registering your plugin 'test' with register/gm);
       },
       runFinally(() => intercept.restore())
