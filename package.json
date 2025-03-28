@@ -1,12 +1,12 @@
 {
   "name": "@xarc/fastify-server",
-  "version": "4.0.9",
+  "version": "4.0.10",
   "description": "A configurable Fastify web server",
   "main": "lib/index.js",
   "types": "./lib/index.d",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "prepublishOnly": "rm -rf lib && tsc && xrun xarc/check",
+    "prepublishOnly": "rm -rf lib && tsc && xrun check",
     "test": "jest",
     "lint": "eslint",
     "format": "prettier . --write",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/electrode-io/fastify-server.git"
+    "url": "git+https://github.com/electrode-io/fastify-server.git"
   },
   "prettier": {
     "printWidth": 100,
