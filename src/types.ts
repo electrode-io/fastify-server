@@ -94,10 +94,7 @@ export type {
 } from "fastify";
 /* eslint-enable max-len */
 
-export type ServerInfo = {
-  address: string;
-  port: number;
-};
+export type ServerInfo = { address: string; port: number };
 
 export interface ElectrodeFastifyInstance extends FastifyInstance {
   info: ServerInfo;
@@ -204,12 +201,12 @@ export type ElectrodeServerConfig = {
    * ```
    */
   plugins?: PluginsConfig;
-  /** 
+  /**
    * options to be passed to fastify verbatim
-   * 
+   *
    * **Note for Fastify 5 migration:**
    * - `requestIdHeader` now defaults to `false` instead of `"request-id"`
-   * - Router options like `maxParamLength`, `ignoreTrailingSlash`, etc. should be 
+   * - Router options like `maxParamLength`, `ignoreTrailingSlash`, etc. should be
    *   moved under `routerOptions` to avoid deprecation warnings
    * - Example:
    * ```js
