@@ -142,3 +142,4 @@ node_modules
 *-lock.*
 .vscode
 lib/
+.github/instructions/wmt-copilot.instructions.md

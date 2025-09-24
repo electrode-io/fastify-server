@@ -2,7 +2,7 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-This is an imaginatively named, configurable web server using Fastify atop Node.js.
+This is an imaginatively named, configurable web server using Fastify 5.x atop Node.js.
 
 The aim is to provide a standardized node web server that can be used to serve your web
 application without the need for duplicating from another example, or starting from scratch.
@@ -11,7 +11,7 @@ The intention is that you will extend via configuration, such that this provides
 functionality of a Fastify web server, and within your own application you will add on the
 features, logic, etc unique to your situation.
 
-This module requires Node v16.x.x+.
+This module requires Node v20.x.x+ and supports Fastify 5.x.
 
 ## Table Of Contents <!-- omit in toc -->
 
@@ -496,7 +496,7 @@ identity (no compression)
 
 ```js
 server: {
-  bodyLimit: 1048576; //new size limit
+  bodyLimit: 1048576 // new size limit in bytes (1MB)
 }
 ```
 
