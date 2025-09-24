@@ -494,8 +494,6 @@ identity (no compression)
 
 ## Increase bodyLimit Size
 
-In Fastify 5, you can configure the body size limit using the `bodyLimit` option in the server configuration:
-
 ```js
 server: {
   bodyLimit: 1048576 // new size limit in bytes (1MB)
