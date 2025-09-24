@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 "use strict";
 const fastifyPlugin = require("fastify-plugin");
 const path = require("path");
@@ -60,4 +58,5 @@ const config = {
     });
   }
 };
-require("../../")(config);
+const { electrodeServer } = require("../../");
+electrodeServer(config);

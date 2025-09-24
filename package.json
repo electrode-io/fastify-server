@@ -45,7 +45,7 @@
   ],
   "license": "Apache-2.0",
   "engines": {
-    "node": ">= 20.0.0"
+    "node": ">= 22.0.0"
   },
   "files": [
     "lib",
@@ -68,7 +68,7 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/jest": "^29.5.11",
     "@types/mocha": "^8.2.0",
-    "@types/node": "^20.19.0",
+    "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.16.0",
