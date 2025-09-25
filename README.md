@@ -212,7 +212,6 @@ Configure electrode provided options.
 - A function to install event listeners for the electrode server startup lifecycle.
 
 - The following events are supported:
-
   - `config-composed` - All configurations have been composed into a single one
   - `server-created` - Fastify server created
   - `plugins-sorted` - Plugins processed and sorted by priority
@@ -450,11 +449,9 @@ The electrode server exports a single API.
 
 - `config` is the [electrode server config](#configuration-options)
 - `decors` - Optional extra `config` or array of `config`. In case you have common config you want to put inside a dedicated module, you can pass them in here.
-
   - If it's an array like `[ decor1, decor2, decor3 ]` then each one is composed into the main config. ie: something similar to `_.merge(mainConfig, decor1, decor2, decor3)`.
 
 - `callback` is an optional errback with the signature `function (err, server)`
-
   - where `server` is the Fastify server
 
 - **Returns:** a promise resolving to the Fastify server if callback is not provided
@@ -496,7 +493,7 @@ identity (no compression)
 
 ```js
 server: {
-  bodyLimit: 1048576 // new size limit in bytes (1MB)
+  bodyLimit: 1048576; // new size limit in bytes (1MB)
 }
 ```
 

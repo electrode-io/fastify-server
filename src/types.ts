@@ -208,7 +208,7 @@ export type ElectrodeServerConfig = {
    * - `requestIdHeader` now defaults to `false` instead of `"request-id"`
    * - Router options like `maxParamLength`, `ignoreTrailingSlash`, etc. should be
    *   moved under `routerOptions` to avoid deprecation warnings
-   * - Example: 
+   * - Example:
    * ```js
    * {
    *   server: {
