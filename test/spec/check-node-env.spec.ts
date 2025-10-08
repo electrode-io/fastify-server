@@ -21,8 +21,18 @@ describe("process-env-abbr", function () {
     checkNodeEnv();
   });
 
+  it("should do nothing for undefined NODE_ENV", function () {
+    delete process.env.NODE_ENV;
+    checkNodeEnv();
+  });
+
+  it("should do nothing for null NODE_ENV", function () {
+    process.env.NODE_ENV = null as any;
+    checkNodeEnv();
+  });
+
   it("should do nothing for full NODE_ENV", function () {
-    ["production", "staging", "development"].forEach(x => {
+    ["production", "staging", "development", "qa", "test"].forEach(x => {
       process.env.NODE_ENV = x;
       checkNodeEnv();
     });

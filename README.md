@@ -2,7 +2,7 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-This is an imaginatively named, configurable web server using Fastify atop Node.js.
+This is an imaginatively named, configurable web server using Fastify 5.x atop Node.js.
 
 The aim is to provide a standardized node web server that can be used to serve your web
 application without the need for duplicating from another example, or starting from scratch.
@@ -11,7 +11,7 @@ The intention is that you will extend via configuration, such that this provides
 functionality of a Fastify web server, and within your own application you will add on the
 features, logic, etc unique to your situation.
 
-This module requires Node v16.x.x+.
+This module requires Node v20.x.x+ and supports Fastify 5.x.
 
 ## Table Of Contents <!-- omit in toc -->
 
@@ -212,7 +212,6 @@ Configure electrode provided options.
 - A function to install event listeners for the electrode server startup lifecycle.
 
 - The following events are supported:
-
   - `config-composed` - All configurations have been composed into a single one
   - `server-created` - Fastify server created
   - `plugins-sorted` - Plugins processed and sorted by priority
@@ -450,11 +449,9 @@ The electrode server exports a single API.
 
 - `config` is the [electrode server config](#configuration-options)
 - `decors` - Optional extra `config` or array of `config`. In case you have common config you want to put inside a dedicated module, you can pass them in here.
-
   - If it's an array like `[ decor1, decor2, decor3 ]` then each one is composed into the main config. ie: something similar to `_.merge(mainConfig, decor1, decor2, decor3)`.
 
 - `callback` is an optional errback with the signature `function (err, server)`
-
   - where `server` is the Fastify server
 
 - **Returns:** a promise resolving to the Fastify server if callback is not provided
@@ -496,7 +493,7 @@ identity (no compression)
 
 ```js
 server: {
-  bodyLimit: 1048576; //new size limit
+  bodyLimit: 1048576; // new size limit in bytes (1MB)
 }
 ```
 
