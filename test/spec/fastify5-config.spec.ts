@@ -23,7 +23,7 @@ describe("Fastify 5 Compatibility", () => {
       });
 
       expect(server.version).toMatch(/^5\./);
-      expect(server.version).toBe("5.6.1");
+      expect(server.version).toBe("5.8.5");
     });
 
     it("should work with Fastify 5 plugin system", async () => {
